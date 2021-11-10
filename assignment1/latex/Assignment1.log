@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.11.8)  8 NOV 2021 18:11
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.11.8)  10 NOV 2021 15:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -462,42 +462,67 @@ File: pgfmodulematrix.code.tex 2020/12/27 v3.1.8b (3.1.8b)
 raries/tikzlibrarytopaths.code.tex
 File: tikzlibrarytopaths.code.tex 2020/12/27 v3.1.8b (3.1.8b)
 )))
+(/usr/local/texlive/2021basic/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count288
+\lst@gtempboxa=\box60
+\lst@token=\toks35
+\lst@length=\count289
+\lst@currlwidth=\dimen257
+\lst@column=\count290
+\lst@pos=\count291
+\lst@lostspace=\dimen258
+\lst@width=\dimen259
+\lst@newlines=\count292
+\lst@lineno=\count293
+\lst@maxwidth=\dimen260
+
+(/usr/local/texlive/2021basic/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
+\c@lstnumber=\count294
+\lst@skipnumbers=\count295
+\lst@framebox=\box61
+)
+(/usr/local/texlive/2021basic/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2020/03/24 1.8d listings configuration
+))
+Package: listings 2020/03/24 1.8d (Carsten Heinz)
+
 (/usr/local/texlive/2021basic/texmf-dist/tex/latex/l3backend/l3backend-pdftex.d
 ef
 File: l3backend-pdftex.def 2021-03-18 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count288
-\l__pdf_internal_box=\box60
+\l__color_backend_stack_int=\count296
+\l__pdf_internal_box=\box62
 ) (./Assignment1.aux)
 \openout1 = `Assignment1.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
 
 (/usr/local/texlive/2021basic/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count289
-\scratchdimen=\dimen257
-\scratchbox=\box61
-\nofMPsegments=\count290
-\nofMParguments=\count291
-\everyMPshowfont=\toks35
-\MPscratchCnt=\count292
-\MPscratchDim=\dimen258
-\MPnumerator=\count293
-\makeMPintoPDFobject=\count294
-\everyMPtoPDFconversion=\toks36
+\scratchcounter=\count297
+\scratchdimen=\dimen261
+\scratchbox=\box63
+\nofMPsegments=\count298
+\nofMParguments=\count299
+\everyMPshowfont=\toks36
+\MPscratchCnt=\count300
+\MPscratchDim=\dimen262
+\MPnumerator=\count301
+\makeMPintoPDFobject=\count302
+\everyMPtoPDFconversion=\toks37
 )
 (/usr/local/texlive/2021basic/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.s
 ty
@@ -509,41 +534,68 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-LaTeX Font Info:    Trying to load font information for U+msa on input line 15.
+\c@lstlisting=\count303
+LaTeX Font Info:    Trying to load font information for U+msa on input line 16.
 
  (/usr/local/texlive/2021basic/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 15.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 16.
 
 
 (/usr/local/texlive/2021basic/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
-{/usr/local/texlive/2021basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2
-]
-(./Assignment1.bbl [3]) [4] (./Assignment1.aux) ) 
+{/usr/local/texlive/2021basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+Underfull \hbox (badness 10000) in paragraph at lines 22--23
+
+ []
+
+[2]
+<figure1_2.pdf, id=18, 749.57304pt x 372.81854pt>
+File: figure1_2.pdf Graphic file (type pdf)
+<use figure1_2.pdf>
+Package pdftex.def Info: figure1_2.pdf  used on input line 26.
+(pdftex.def)             Requested size: 360.0pt x 179.05325pt.
+
+Overfull \hbox (17.0pt too wide) in paragraph at lines 26--27
+[][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 33--34
+
+ []
+
+[3 <./figure1_2.pdf, page is rotated 90 degrees>] [4] (./Assignment1.bbl)
+(/usr/local/texlive/2021basic/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2020/03/24 1.8d listings language file
+)
+(../code/centering_pca.py [5]) [6] (./Assignment1.aux) ) 
 Here is how much of TeX's memory you used:
- 13620 strings out of 480445
- 267463 string characters out of 5892391
- 544559 words of memory out of 5000000
- 30651 multiletter control sequences out of 15000+600000
- 411488 words of font info for 57 fonts, out of 8000000 for 9000
+ 15414 strings out of 480445
+ 290919 string characters out of 5892391
+ 763674 words of memory out of 5000000
+ 32422 multiletter control sequences out of 15000+600000
+ 411829 words of font info for 58 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
- 87i,6n,89p,1015b,558s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2021basic/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2021ba
-sic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/20
-21basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texliv
-e/2021basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/tex
-live/2021basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/
-texlive/2021basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/loc
-al/texlive/2021basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on Assignment1.pdf (4 pages, 82667 bytes).
+ 87i,6n,89p,1307b,1790s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </Users/jacobmalm/Libr
+ary/texlive/2021basic/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1095.600pk></us
+r/local/texlive/2021basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb>
+</usr/local/texlive/2021basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.
+pfb></usr/local/texlive/2021basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmm
+i10.pfb></usr/local/texlive/2021basic/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmr10.pfb></usr/local/texlive/2021basic/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmr12.pfb></usr/local/texlive/2021basic/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmr17.pfb></usr/local/texlive/2021basic/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmsy10.pfb></usr/local/texlive/2021basic/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmti10.pfb>
+Output written on Assignment1.pdf (6 pages, 122568 bytes).
 PDF statistics:
- 48 PDF objects out of 1000 (max. 8388607)
- 34 compressed objects within 1 object stream
+ 109 PDF objects out of 1000 (max. 8388607)
+ 68 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 13 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 18 words of extra memory for PDF output out of 10000 (max. 10000000)
 

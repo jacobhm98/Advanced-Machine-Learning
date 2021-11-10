@@ -1,8 +1,7 @@
 \begin{thebibliography}{1}
 
-\bibitem{stackexchange}
-ttnphns.
-\newblock How does centering the data get rid of the intercept in regression
-  and pca?
+\bibitem{pca_lecture_book}
+{\em Advanced Data Analysis from an Elementary Point of View}.
+\newblock Cambridge University Press, 2013.
 
 \end{thebibliography}
