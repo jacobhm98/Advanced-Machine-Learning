@@ -1,7 +1,15 @@
 \begin{thebibliography}{1}
 
+\bibitem{pca_from_cxx}
+{\em Covariance and Principal Component Analysis (PCA)}.
+
 \bibitem{pca_lecture_book}
 {\em Advanced Data Analysis from an Elementary Point of View}.
 \newblock Cambridge University Press, 2013.
+
+\bibitem{pseudoinverse}
+Guido Gerig.
+\newblock Least squares, pseudo-inverses, pca and svd.
+\newblock Technical report, University of Utah, 2012.
 
 \end{thebibliography}
