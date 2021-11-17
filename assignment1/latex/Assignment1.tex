@@ -26,25 +26,26 @@ However, if we shift the location of this manifold, while keeping its shape inta
 \includegraphics[width=\textwidth]{figure1_2.pdf}
 
 \subsection{Is a single SVD operation sufficient to performing PCA on both the rows and columns of a data matrix}
+\label{svd}
 
-Given a mean-centered data matrix \textbf{X} with \textit{m} columns and \textit{n} rows, $m < n$, we know that we can calculate the covariance matrix \textbf{$C_{X}$} in the following manner:
-$$ C_{X} = \frac{1}{n} X^{T}X$$
-We know that this covariance matrix will be symmetric, meaning that it has an eigendecomposition where the eigenvectors are orthogonal, resulting in:
+Given a mean-centered data matrix \textbf{X} with \textit{m} columns and \textit{n} rows, $m < n$, we know that we can estimate the covariance matrix \textbf{$C_{X}$} in the following manner:
+$$ C_{X} = \frac{1}{n} XX^{T}$$
+We know that this covariance matrix will be symmetric, meaning that it has a spectral decomposition where the eigenvectors are orthogonal, resulting in:
 
 $$ C_{X} = Q \Lambda Q^{T} $$
 
 This decomposition can be interpreted as capturing the patterns of variance across the dataset \textbf{X}. The columns in \textbf{Q} provide directions, and their corresponding eigenvalues (as a proportion of the sum of all eigenvalues) encode how much of the variance is captured in the direction of the eigenvector. Thus, the eigenvectors in this decomposition are the principal axes we use to translate our datapoints into our PCA projection \cite{pca_from_cxx} .\newline
 
-If we rewrite $X$ in terms of its SVD  before computing the covariance matrix, we see that it can be written as
+If we rewrite $X$ in terms of its SVD before computing the covariance matrix, we see that it can be written as
 
-$$ C_{X} = \frac{1}{n} V \Sigma U^{T} U\Sigma^{T} V^{T}  $$
+$$ C_{X} = \frac{1}{n} U \Sigma V^{T} V\Sigma^{T} U^{T}  $$
 
 Since \textbf{U} and \textbf{V} are orthonormal, and the only non-zero points of $ \Sigma $ lie along its first diagonal, this expression cancels out to                                                                                                                                                                          
 
-$$ C_{X} = \frac{1}{n} V \widehat{\Sigma}^{2} V^{T}  $$
+$$ C_{X} = \frac{1}{n} U \widehat{\Sigma}^{2} U^{T}  $$
 
 Allowing us to draw the following conclusions
-$$ Q = V $$
+$$ Q = U $$
 
 $$ \Lambda =  \frac{1}{n} \widehat{\Sigma}^{2}$$
 
@@ -54,59 +55,111 @@ That is, the principle axes are given by \textbf{V} when the corresponding singu
 
 If we instead want to find the principle axes of the transpose of X, this turns into
 
-$$ C_{X^{T}} = \frac{1}{n} U \Sigma^{T} V^{T} V\Sigma U^{T}  $$
-$$ C_{X^{T}} = \frac{1}{n} U \overline{\Sigma}^{2} U^{T}  $$
+$$ C_{X^{T}} = \frac{1}{n} V \Sigma^{T} U^{T} U\Sigma V^{T}  $$
+$$ C_{X^{T}} = \frac{1}{n} V \overline{\Sigma}^{2} V^{T}  $$
 
 Where $\overline{\Sigma}$ is a square, $m \times m$ diagonal matrix.\newline
 
-
 If we restrict ourselves to looking at non-zero values (the first \textit{m} values along the first diagonal) $\widehat{\Sigma} = \overline{\Sigma} $, these are the only values that will affect our principle axes.\newline
 
-Thus we can conclude that the principle axes that define our PCA projection of the transpose of $X$ are given by $U$. This is the same $U$ we get from performing a SVD on $X$, which means that we get all the necessary information for performing PCA on $X$ and $X^{T}$ from one SVD operation. We will  need to pad $\Sigma$ with zeroes in order to make the matrix multiplication possible, and we will need to transpose one of the terms we get from the first SVD operation,  but we only need to perform it once.\newline
+Thus we can conclude that the principle axes that define our PCA projection of the transpose of $X$ are given by $V$. This is the same $V$ we get from performing a SVD on $X$, which means that we get all the necessary information for performing PCA on $X$ and $X^{T}$ from one SVD operation. We will  need to pad/remove zeroes from $\Sigma$ in order to make the matrix multiplication possible, and we will need to transpose one of the terms we get from the first SVD operation,  but we only need to perform it once.\newline
 
 A program which verifies that the principal components of $X$ can be retrieved from an SVD of $X^{T}$ is given in Appendix 2.
 
 \subsection{Explain why the use of the pseudo-inverse is a good choice to obtain the inverse mapping of the linear map}
 
-The pseudo-inverse is a good choice to obtain the inverse mapping because when the PCA model is fully respected, that is our data points $\textbf{y} \in \mathbb{R}^d$ are fully contained within a subspace $\textbf{U} \in \mathbb{R}^k$ where $k < d$, and \textbf{U} is the column space of \textbf{W}, $\textbf{W}^+$ is the inverse mapping of \textbf{W}, even when \textbf{W} is non-square.\newline
+The pseudo-inverse is a good choice to obtain the inverse mapping because when the PCA model is fully respected, that is our data points $\textbf{y} \in \mathbb{R}^d$ are fully contained within a subspace $\textbf{U} \in \mathbb{R}^k$ where $k < d$, and \textbf{U} is the column space of \textbf{W}, $\textbf{W}^{+}$ is the inverse mapping of \textbf{W}, even when \textbf{W} is non-square.\newline
 
 However, when the PCA model is not fully respected and there are points in \textbf{y} that lie outside of \textbf{U}, the pseudo-inverse computes the inverse mapping from the points projected onto \textbf{U}, which is the approximation that minimizes the euclidean distance between computed and actual points\cite{pseudoinverse}.\newline
 
 Thus, using the pseudo-inverse of the linear transformation that is hypothesized to have generated \textbf{y} from \textbf{x}, allows us to compute the projection onto the PCA axes even for points that do not completely lie within the $k$ dimensional column space, which often occurs due to noisy measurements or an underlying model not quite aligned with the PCA assumptions.
+
+\subsection{Derive PCA using the criterion of variance maximization and show that you get the same results as with the criterion of minimizing the reconstruction error}
+
+We begin by assuming that our data set are observations from a set of \textit{d} jointly distributed gaussian variables, \textbf{Y}, that have undergone a linear transformation \textbf{W} applied to a set of \textit{p} latent variables \textbf{X}, where $p < d$. This linear transformation is restricted to be an axis change, meaning that \textbf{W} is orthogonal.\newline
+
+We assume that the latent variables \textbf{x} are uncorrelated. This means that the covariances are zero, and that the covariance matrix $C_{x} $ is diagonal.
+
+The covariance of \textbf{x} is given by
+
+$$ C_{x} = \mathbb{E}[xx^{T}] $$
+
+Similarly, the covariance of y is given by 
+$$ C_{y} = \mathbb{E}[yy^{T}] $$
+
+Rewriting this equation using the PCA assumptions ($y = Wx$)
+
+$$ C_{y} = \mathbb{E}[Wxx^{T}W^{T}] $$
+
+Using the fact that expectation is a linear operator
+
+$$ C_{y} = W\mathbb{E}[xx^{T}]W^{T}$$
+$$ C_{y} = WC_{x}W^{T}$$
+
+Since \textbf{W} is orthonormal
+
+$$ W^{T}C_{y} = W^{T}WC_{x}W^{T}$$
+$$ W^{T}C_{y}W = W^{T}WC_{x}W^{T}W$$
+$$ W^{T}C_{y}W = IC_{x}I$$
+$$ W^{T}C_{y}W = C_{x}$$
+
+Since $ C_{y} $ is symmetrical we can use its spectral decomposition to rewrite it as
+$$ C_{y} = Q\Lambda Q^{T} $$
+
+And thus
+$$C_{x} = W^{T}Q\Lambda Q^{T}W$$
+
+Remembering our assumption that the variables in \textbf{x} are uncorrelated,  $C_{x}$ is a diagonal matrix. Since $\Lambda$ is diagonal and $Q$ is orthogonal, 
+$$WQ^{T} = I$$
+$$WQ^{T}Q=QI$$
+$$W= Q$$
+
+and
+
+$$ C_{x} = \Lambda $$
+
+However, since $C_{X}$ is a $p\times p$ matrix only the first $p$ eigenvalues of $\Lambda$ are non-zero (assuming the PCA model is followed). Thus the above equality only holds when choosing the $p$ first eigenvectors when sorting by corresponding eigenvalue size, and restricting $\Lambda$ to its non-zero diagonal values. \newline
+
+This suggests that the eigenvalues of the spectral decomposition of $C_{y}$ represent the amount of variance captured in the direction of its corresponding eigenvector, with our eigenvectors spanning the linear subspace that contains \textbf{y}. Thus our principal axes are given by $Q$ in order of importance, when $\Lambda$ is sorted in descending order \cite{book}.\newline
+
+Similarly, when deriving PCA from a minimization of squared error perspective, our principal components are given by \textbf{U}, with $X = U\Sigma V^{T}$. As shown in \ref{svd}, $U = Q$, and $\Sigma^2$ is proportional to $\Lambda$. Thus, due to the monotonicity of the square function, the principal axes will appear in the same order, and have the same values. As our principal axes determine our PCA projection, we can conclude that the two derivations yield equivalent results\cite{book}.
+
 
 
 \section{Multidimensional Scaling and Isomap}
 
 \subsection{Argue that the process to obtain the neighbourhood graph G in the Isomap method may yield a disconnected graph.  Provide an example.  Explain why this is problematic.}
 
-The Isomap algorithm works similarly to MDS in that it relies on computing a Gram matrix S from a distance matrix D. However,dissimilarly to MDS,this distance matrix is not made up of euclidean distances. Instead, the distances are approximations of the shortest path from point A to point B where the path is restricted to the theoretical manifold our data distribution makes up. Computing the shape of this manifold as well as the length of the path through the manifold from point A to B is infeasible. An approximation of the manifold can be created by drawing a neighbourhood graph G. This neighbourhood graph G is created one of two ways. Either by joining each point to its K nearest neighbours, where a point A is considered closer to point B than to C if the euclidean distance between A-B is smaller than A-C.  Alternatively the neighbourhood graph can be constructed by choosing to join a point A to all of its neighbours that lie within a certain distance \textit{d}.\newline
+The Isomap algorithm works similarly to MDS in that it relies on computing a Gram matrix S from a distance matrix D. However, dissimilarly to MDS, this distance matrix is not made up of euclidean distances. Instead, the distances are approximations of the shortest path from point A to point B where the path is restricted to the theoretical manifold our data distribution makes up. Computing the shape of this manifold as well as the length of the path through the manifold from point A to B is infeasible. An approximation of the manifold can be created by drawing a neighbourhood graph G. This neighbourhood graph G is created one of two ways. Either by joining each point to its K nearest neighbours, where a point A is considered closer to point B than to C if the euclidean distance between A-B is smaller than A-C.  Alternatively the neighbourhood graph can be constructed by choosing to join a point A to all of its neighbours that lie within a certain distance \textit{d}.\newline
 
 
 To demonstrate how this process can lead to a disconnected graph,  assume we have the following nodes located at given coordinates.
 
 \begin{tikzpicture}[node distance=15mm, main/.style = {draw, circle}] 
-\node[main] (1) {$0,0$}; 
-\node[main] (2)[right of = 1] {$0,1$}; 
-\node[main] (3)[right of = 2] {$0,2$}; 
-\node[main] (4)[right of = 3] {$0,10$}; 
-\node[main] (5)[right of = 4] {$0,11$}; 
-\node[main] (6)[right of = 5] {$0,12$}; 
+\node[main] (1) {$0,0$};
+\node[main] (2)[right of = 1] {$0,1$};
+\node[main] (3)[right of = 2] {$0,2$};
+\node[main] (4)[right of = 3] {$0,10$};
+\node[main] (5)[right of = 4] {$0,11$};
+\node[main] (6)[right of = 5] {$0,12$};
 
 \end{tikzpicture}
 
 If we go by the k-nearest neighbour approach and set k=2, or go by max euclidean distance between nodes and set \textit{d} to smaller than 8, our resulting graph will be disconnected.
 
 \begin{tikzpicture}[node distance=15mm, main/.style = {draw, circle}] 
-\node[main] (1) {$0,0$}; 
-\node[main] (2)[right of = 1] {$0,1$}; 
-\node[main] (3)[right of = 2] {$0,2$}; 
-\node[main] (4)[right of = 3] {$0,10$}; 
-\node[main] (5)[right of = 4] {$0,11$}; 
-\node[main] (6)[right of = 5] {$0,12$}; 
+\node[main] (1) {$0,0$};
+\node[main] (2)[right of = 1] {$0,1$};
+\node[main] (3)[below of = 2] {$0,2$};
+\node[main] (4)[right of = 3] {$0,10$};
+\node[main] (5)[right of = 4] {$0,11$};
+\node[main] (6)[below of = 5] {$0,12$};
 \draw(1) -- (2);
 \draw(2) -- (3);
+\draw(3) -- (1);
 \draw(4) -- (5);
 \draw(5) -- (6);
+\draw(6) -- (4);
 \end{tikzpicture}
 
 According to the Isomap algorithm, when we compute the distance matrix, the entry between point A and point B will be the summation of the distances between all nodes that lie along the shortest path between A and B through the neighbourhood graph G constructed in the previous step. If this is a disconnected graph, the distance between any point A to any point B where A and B are members of different disjoint subsets in G will be infinite, or undefined. In either of these cases the spectral decomposition of the Gram matrix corresponding to the distance matrix will be undefined and the Isomap algorithm will fail.

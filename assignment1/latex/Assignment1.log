@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.11.8)  16 NOV 2021 18:51
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.11.8)  17 NOV 2021 17:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -564,17 +564,17 @@ Overfull \hbox (17.0pt too wide) in paragraph at lines 26--27
  []
 
 [3 <./figure1_2.pdf, page is rotated 90 degrees>]
-Underfull \hbox (badness 10000) in paragraph at lines 36--37
+Underfull \hbox (badness 10000) in paragraph at lines 37--38
 
  []
 
 [4]
-Underfull \hbox (badness 10000) in paragraph at lines 51--52
+Underfull \hbox (badness 10000) in paragraph at lines 52--53
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 60--61
+Underfull \hbox (badness 10000) in paragraph at lines 61--62
 
  []
 
@@ -599,25 +599,40 @@ Underfull \hbox (badness 10000) in paragraph at lines 73--74
  []
 
 [6]
-Underfull \hbox (badness 10000) in paragraph at lines 82--83
+Underfull \hbox (badness 10000) in paragraph at lines 79--80
 
  []
 
-[7] (./Assignment1.bbl [8])
+[7] [8]
+Underfull \hbox (badness 10000) in paragraph at lines 121--122
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 123--124
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 133--134
+
+ []
+
+[9] [10] (./Assignment1.bbl [11])
 (/usr/local/texlive/2021basic/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2020/03/24 1.8d listings language file
 )
-(../code/centering_pca.py) [9] (../code/pca_transpose.py
+(../code/centering_pca.py) [12] (../code/pca_transpose.py
 Overfull \hbox (198.45581pt too wide) in paragraph at lines 11--12
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
-) [10] (./Assignment1.aux) ) 
+) [13] (./Assignment1.aux) ) 
 Here is how much of TeX's memory you used:
- 15438 strings out of 480445
- 291199 string characters out of 5892391
- 769977 words of memory out of 5000000
- 32441 multiletter control sequences out of 15000+600000
+ 15445 strings out of 480445
+ 291330 string characters out of 5892391
+ 771054 words of memory out of 5000000
+ 32448 multiletter control sequences out of 15000+600000
  412450 words of font info for 60 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
  87i,6n,89p,1307b,1278s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -637,10 +652,10 @@ r/local/texlive/2021basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><
 .pfb></usr/local/texlive/2021basic/texmf-dist/fonts/type1/public/amsfonts/cm/cm
 ti10.pfb></usr/local/texlive/2021basic/texmf-dist/fonts/type1/public/amsfonts/s
 ymbols/msbm10.pfb>
-Output written on Assignment1.pdf (10 pages, 170960 bytes).
+Output written on Assignment1.pdf (13 pages, 179343 bytes).
 PDF statistics:
- 143 PDF objects out of 1000 (max. 8388607)
- 93 compressed objects within 1 object stream
+ 153 PDF objects out of 1000 (max. 8388607)
+ 100 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  18 words of extra memory for PDF output out of 10000 (max. 10000000)
 

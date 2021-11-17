@@ -5,46 +5,48 @@ The style file: plain.bst
 Database file #1: mybib.bib
 Warning--to sort, need author, editor, or key in pca_lecture_book
 Warning--to sort, need author, organization, or key in pca_from_cxx
+Warning--to sort, need author, editor, or key in book
+Warning--empty author and editor in book
 Warning--empty author and editor in pca_lecture_book
-You've used 3 entries,
+You've used 4 entries,
             2118 wiz_defined-function locations,
-            508 strings with 4251 characters,
-and the built_in function-call counts, 527 in all, are:
-= -- 48
-> -- 9
+            511 strings with 4297 characters,
+and the built_in function-call counts, 703 in all, are:
+= -- 63
+> -- 10
 < -- 0
-+ -- 5
++ -- 6
 - -- 2
-* -- 27
-:= -- 86
-add.period$ -- 6
-call.type$ -- 3
-change.case$ -- 9
+* -- 38
+:= -- 108
+add.period$ -- 8
+call.type$ -- 4
+change.case$ -- 11
 chr.to.int$ -- 0
-cite$ -- 6
-duplicate$ -- 29
-empty$ -- 59
+cite$ -- 9
+duplicate$ -- 42
+empty$ -- 83
 format.name$ -- 2
-if$ -- 113
+if$ -- 154
 int.to.chr$ -- 0
-int.to.str$ -- 3
-missing$ -- 1
-newline$ -- 15
+int.to.str$ -- 4
+missing$ -- 2
+newline$ -- 19
 num.names$ -- 2
-pop$ -- 15
+pop$ -- 22
 preamble$ -- 1
-purify$ -- 7
+purify$ -- 9
 quote$ -- 0
-skip$ -- 17
+skip$ -- 23
 stack$ -- 0
-substring$ -- 15
-swap$ -- 2
+substring$ -- 20
+swap$ -- 3
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 10
-warning$ -- 3
+type$ -- 12
+warning$ -- 5
 while$ -- 2
-width$ -- 4
-write$ -- 26
-(There were 3 warnings)
+width$ -- 5
+write$ -- 34
+(There were 5 warnings)
