@@ -128,9 +128,46 @@ Similarly, when deriving PCA from a minimization of squared error perspective, o
 
 \section{Multidimensional Scaling and Isomap}
 
+\subsection{Explain intuitively why the double centering trick is needed to be able to solve for S given D}
+
+Given a squared distance matrix \textbf{D} we wish to find Gram matrix \textbf{S}. As mentioned, the equation for this conversion is given by
+
+$$ s_{ij} = -\frac{1}{2}(d^{2}_{ij} - s_{ii} - s_{jj})$$
+
+The issue here is that we do not know the coordinates of our data points and as a result $s_{ii}, s_{jj}$ are unknown, making this definition circular. When we assume that our data is centered (which we are allowed to do since distance is invariant to location), it can be shown that
+
+$$ -(s_{ii} + s_{jj}) = \mu_{ij} - \mu_{i} - \mu_{j} $$
+
+These $\mu$'s refer to the means of the distance matrix we are given. Thus, by assuming that our data is centered, we can rewrite the unknowns in our conversion equation in terms of information contained in the distance matrix that we are given. This makes the conversion possible \cite{book}.
+
+The double centering trick simply performs $$ s_{ij} = -\frac{1}{2}(d^{2}_{ij} +( \mu_{ij} - \mu_{i} - \mu_{j}))$$ for all matrix elements in \textbf{D}, converting our given distance matrix into the desired Gram matrix.
+
+
+\subsection{Use the same reasoning as in the previous question to argue that $s_{ij}$ can be computed as $s_{ij} = -\frac{1}{2}(d_{ij}^{2} - d_{1i}^{2} - d_{1j}^{2})$}
+
+Comparing the original equation
+$$ s_{ij} = -\frac{1}{2}(d^{2}_{ij} - s_{ii} - s_{jj})$$
+with
+$$s_{ij} = -\frac{1}{2}(d_{ij}^{2} - d_{1i}^{2} - d_{1j}^{2})$$
+
+We can deduce that
+$$s_{ii} + s_{jj} = d_{1i}^{2} + d_{1j}^{2}$$
+must hold.\newline
+
+From Lee and Verleysen \cite{book} equation 4.42 we know that we can rewrite this equation accordingly
+$$ s_{ii} + s_{jj} = (\langle \mathbf{y_{1}} \cdot \mathbf{y_{1}} \rangle - 2\langle \mathbf{y_{1}} \cdot \mathbf{y_{i}} \rangle + \langle \mathbf{y_{i}} \cdot \mathbf{y_{i}} \rangle) + (\langle \mathbf{y_{1}} \cdot \mathbf{y_{1}} \rangle - 2\langle \mathbf{y_{1}} \cdot \mathbf{y_{j}} \rangle + \langle \mathbf{y_{j}} \cdot \mathbf{y_{j}} \rangle)$$
+
+Where $\mathbf{y_{1}}$ represents the vector holding the coordinates of the first point. Now, if instead of assuming that our data points are mean centered and assume that the first data point is located on the origin, which we are allowed to do since this does not affect the distance between any of the points, the above equation reduces to
+
+$$ s_{ii} + s_{jj} = \langle \mathbf{y_{j}} \cdot \mathbf{y_{j}} \rangle + \langle \mathbf{y_{i}} \cdot \mathbf{y_{i}} \rangle$$
+$$ s_{ii} + s_{jj} = s_{ii} + s_{jj} $$
+
+Thus we can see that we are justified in using this alternate equation to calculate our Gram matrix. It will not result in the same mapping as if we used $ s_{ij} = -\frac{1}{2}(d^{2}_{ij} +( \mu_{ij} - \mu_{i} - \mu_{j}))$. The difference will be that this equation will produce a mean centered mapping whereas our equation will fix the location of the first data point to the origin.
+
+
 \subsection{Argue that the process to obtain the neighbourhood graph G in the Isomap method may yield a disconnected graph.  Provide an example.  Explain why this is problematic.}
 
-The Isomap algorithm works similarly to MDS in that it relies on computing a Gram matrix S from a distance matrix D. However, dissimilarly to MDS, this distance matrix is not made up of euclidean distances. Instead, the distances are approximations of the shortest path from point A to point B where the path is restricted to the theoretical manifold our data distribution makes up. Computing the shape of this manifold as well as the length of the path through the manifold from point A to B is infeasible. An approximation of the manifold can be created by drawing a neighbourhood graph G. This neighbourhood graph G is created one of two ways. Either by joining each point to its K nearest neighbours, where a point A is considered closer to point B than to C if the euclidean distance between A-B is smaller than A-C.  Alternatively the neighbourhood graph can be constructed by choosing to join a point A to all of its neighbours that lie within a certain distance \textit{d}.\newline
+The Isomap algorithm works similarly to MDS in that it relies on computing a Gram matrix \textbf{S} from a distance matrix \textbf{D}. However, dissimilarly to MDS, this distance matrix is not made up of euclidean distances. Instead, the distances are approximations of the shortest path from point A to point B where the path is restricted to the theoretical manifold our data distribution makes up. Computing the shape of this manifold as well as the length of the path through the manifold from point A to B is infeasible. An approximation of the manifold can be created by drawing a neighbourhood graph G. This neighbourhood graph G is created one of two ways. Either by joining each point to its \textit{k} nearest neighbours, where a point A is considered closer to point B than to C if the euclidean distance between A-B is smaller than A-C.  Alternatively the neighbourhood graph can be constructed by choosing to join a point A to all of its neighbours that lie within a certain distance \textit{d}.\newline
 
 
 To demonstrate how this process can lead to a disconnected graph,  assume we have the following nodes located at given coordinates.
