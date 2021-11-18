@@ -162,7 +162,7 @@ Where $\mathbf{y_{1}}$ represents the vector holding the coordinates of the firs
 $$ s_{ii} + s_{jj} = \langle \mathbf{y_{j}} \cdot \mathbf{y_{j}} \rangle + \langle \mathbf{y_{i}} \cdot \mathbf{y_{i}} \rangle$$
 $$ s_{ii} + s_{jj} = s_{ii} + s_{jj} $$
 
-Thus we can see that we are justified in using this alternate equation to calculate our Gram matrix. It will not result in the same mapping as if we used $ s_{ij} = -\frac{1}{2}(d^{2}_{ij} +( \mu_{ij} - \mu_{i} - \mu_{j}))$. The difference will be that this equation will produce a mean centered mapping whereas our equation will fix the location of the first data point to the origin.
+Thus we can see that we are justified in using this alternate equation to calculate our Gram matrix. It will not result in the same mapping as if we used $ s_{ij} = -\frac{1}{2}(d^{2}_{ij} +( \mu_{ij} - \mu_{i} - \mu_{j}))$, which will be mean centered, whereas our equation will fix the location of the first data point to the origin.
 
 
 \subsection{Argue that the process to obtain the neighbourhood graph G in the Isomap method may yield a disconnected graph.  Provide an example.  Explain why this is problematic.}
