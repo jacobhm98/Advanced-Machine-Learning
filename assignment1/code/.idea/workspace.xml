@@ -20,16 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f52cc56c-5cd7-4648-a5e3-929f3b0cd997" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/pca_transpose.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../latex/Assignment1.aux" beforeDir="false" afterPath="$PROJECT_DIR$/../latex/Assignment1.aux" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../latex/Assignment1.bbl" beforeDir="false" afterPath="$PROJECT_DIR$/../latex/Assignment1.bbl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../latex/Assignment1.blg" beforeDir="false" afterPath="$PROJECT_DIR$/../latex/Assignment1.blg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../latex/Assignment1.log" beforeDir="false" afterPath="$PROJECT_DIR$/../latex/Assignment1.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../latex/Assignment1.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../latex/Assignment1.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../latex/Assignment1.synctex.gz" beforeDir="false" afterPath="$PROJECT_DIR$/../latex/Assignment1.synctex.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../latex/Assignment1.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../latex/Assignment1.tex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../latex/mybib.bib" beforeDir="false" afterPath="$PROJECT_DIR$/../latex/mybib.bib" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

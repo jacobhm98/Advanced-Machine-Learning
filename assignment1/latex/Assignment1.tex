@@ -18,6 +18,7 @@
 \section{Principal Component Analysis}
 
 \subsection{Explain why data-centering is required before performing PCA.  What might happen if we perform PCA on non-centered data?}
+\label{mean-center}
 
 PCA attempts to find new axes that are linear combinations of the old axes, such that these new axes, or principal components, minimize the mean squared distance between the original data points and their projection onto the principal axes \cite{pca_lecture_book}.  One key thing to note is that these principal components are limited by the need to cross through the origin. This limitation means that data that is shifted cannot be approximated as well. A simple example is to consider the points $\lbrace-1, 1\rbrace$, $\lbrace0,0,\rbrace$, $\lbrace1, -1\rbrace$. These points all lie perfectly along a 1 dimensional manifold, the line with slope -1 going through the origin. The mean of this dataset is 0. Thus, we expect the first principle component to consist of this line, and we expect all of the variance to be explained by the first principle component, as the PCA model is perfectly respected.When we run the PCA code (with the lines responsible for centering the data commented out in the SKLearn library file) given in appendix 1, this is exactly what we see. Great! PCA works.\newline
 
@@ -28,43 +29,16 @@ However, if we shift the location of this manifold, while keeping its shape inta
 \subsection{Is a single SVD operation sufficient to performing PCA on both the rows and columns of a data matrix}
 \label{svd}
 
-Given a mean-centered data matrix \textbf{X} with \textit{m} columns and \textit{n} rows, $m < n$, we know that we can estimate the covariance matrix \textbf{$C_{X}$} in the following manner:
-$$ C_{X} = \frac{1}{n} XX^{T}$$
-We know that this covariance matrix will be symmetric, meaning that it has a spectral decomposition where the eigenvectors are orthogonal, resulting in:
+The first step we do when we perform PCA is to mean center the data. In \ref{mean-center} we showed why this was necessary. However, when we mean center, we only mean center along one of the two axes. If columns represent a feature and rows represent observations, we can view each column as containing observations of a distinct random variable. Thus in this case, mean centering along each column is interpreted as shifting the mean of the distribution responsible for generating this column to zero. This keeps the structure of the data intact.\newline
 
-$$ C_{X} = Q \Lambda Q^{T} $$
+When we wish to perform PCA on the transpose of our data matrix, the interpretation of the rows and axes switch. Furthermore, our data will not be mean centered after transposing the matrix, as in the previous PCA operation we only center along the columns.\newline
 
-This decomposition can be interpreted as capturing the patterns of variance across the dataset \textbf{X}. The columns in \textbf{Q} provide directions, and their corresponding eigenvalues (as a proportion of the sum of all eigenvalues) encode how much of the variance is captured in the direction of the eigenvector. Thus, the eigenvectors in this decomposition are the principal axes we use to translate our datapoints into our PCA projection \cite{pca_from_cxx} .\newline
+We are not able to mean center along rows and columns before performing both PCA operations, as this will alter the distribution of our data set. Imagine a case where we are given a data matrix with $ n $ observations and two normally distributed features, $x, y$. Each one of these observations can be plotted on a 2d plane, where its position on the x-axis is given by its value of feature $ x $ and its y-value is given by value of feature $ y $. If we presume that these features are independent, our data points will fill in a circle as $ n \rightarrow  \infty $. Centering along each column will shift the center of this circle to the origin. Centering along the rows means that we need each observation to fulfill the following equation
+$$ 0 = \frac{1}{2} (x_{i} + y_{i},) i \in \lbrace 1 ...  n\rbrace $$
 
-If we rewrite $X$ in terms of its SVD before computing the covariance matrix, we see that it can be written as
+We can easily see that this will force all points to lie on the line $ y =  -x $, drastically changing the distribution of our observations.\newline
 
-$$ C_{X} = \frac{1}{n} U \Sigma V^{T} V\Sigma^{T} U^{T}  $$
-
-Since \textbf{U} and \textbf{V} are orthonormal, and the only non-zero points of $ \Sigma $ lie along its first diagonal, this expression cancels out to                                                                                                                                                                          
-
-$$ C_{X} = \frac{1}{n} U \widehat{\Sigma}^{2} U^{T}  $$
-
-Allowing us to draw the following conclusions
-$$ Q = U $$
-
-$$ \Lambda =  \frac{1}{n} \widehat{\Sigma}^{2}$$
-
-Where $\widehat{\Sigma}$ is a square, $n \times n$ matrix, where there are \textit{m} non-zero values all placed along the first diagonal.\newline
-
-That is, the principle axes are given by \textbf{V} when the corresponding singular values are sorted in order of magnitude.
-
-If we instead want to find the principle axes of the transpose of X, this turns into
-
-$$ C_{X^{T}} = \frac{1}{n} V \Sigma^{T} U^{T} U\Sigma V^{T}  $$
-$$ C_{X^{T}} = \frac{1}{n} V \overline{\Sigma}^{2} V^{T}  $$
-
-Where $\overline{\Sigma}$ is a square, $m \times m$ diagonal matrix.\newline
-
-If we restrict ourselves to looking at non-zero values (the first \textit{m} values along the first diagonal) $\widehat{\Sigma} = \overline{\Sigma} $, these are the only values that will affect our principle axes.\newline
-
-Thus we can conclude that the principle axes that define our PCA projection of the transpose of $X$ are given by $V$. This is the same $V$ we get from performing a SVD on $X$, which means that we get all the necessary information for performing PCA on $X$ and $X^{T}$ from one SVD operation. We will  need to pad/remove zeroes from $\Sigma$ in order to make the matrix multiplication possible, and we will need to transpose one of the terms we get from the first SVD operation,  but we only need to perform it once.\newline
-
-A program which verifies that the principal components of $X$ can be retrieved from an SVD of $X^{T}$ is given in Appendix 2.
+Thus, we cannot perform PCA on both the rows and columns with one SVD operation as we need to mean center the matrix before the SVD operation and after the transposition.
 
 \subsection{Explain why the use of the pseudo-inverse is a good choice to obtain the inverse mapping of the linear map}
 
@@ -134,7 +108,7 @@ Given a squared distance matrix \textbf{D} we wish to find Gram matrix \textbf{S
 
 $$ s_{ij} = -\frac{1}{2}(d^{2}_{ij} - s_{ii} - s_{jj})$$
 
-The issue here is that we do not know the coordinates of our data points and as a result $s_{ii}, s_{jj}$ are unknown, making this definition circular. When we assume that our data is centered (which we are allowed to do since distance is invariant to location), it can be shown that
+The issue here is that we do not know the coordinates of our data points and as a result $s_{ii}, s_{jj}$ are unknown, making this definition circular. When we assume that our data is mean centered (which we are allowed to do since distance is invariant to location), it can be shown that
 
 $$ -(s_{ii} + s_{jj}) = \mu_{ij} - \mu_{i} - \mu_{j} $$
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.11.8)  18 NOV 2021 15:28
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.11.8)  20 NOV 2021 18:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -548,7 +548,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
 {/usr/local/texlive/2021basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 22--23
+Underfull \hbox (badness 10000) in paragraph at lines 23--24
 
  []
 
@@ -556,119 +556,107 @@ Underfull \hbox (badness 10000) in paragraph at lines 22--23
 <figure1_2.pdf, id=18, 749.57304pt x 372.81854pt>
 File: figure1_2.pdf Graphic file (type pdf)
 <use figure1_2.pdf>
-Package pdftex.def Info: figure1_2.pdf  used on input line 26.
+Package pdftex.def Info: figure1_2.pdf  used on input line 27.
 (pdftex.def)             Requested size: 360.0pt x 179.05325pt.
 
-Overfull \hbox (17.0pt too wide) in paragraph at lines 26--27
+Overfull \hbox (17.0pt too wide) in paragraph at lines 27--28
 [][] 
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 32--33
+
+ []
+
 [3 <./figure1_2.pdf, page is rotated 90 degrees>]
-Underfull \hbox (badness 10000) in paragraph at lines 37--38
+Underfull \hbox (badness 10000) in paragraph at lines 34--35
 
  []
 
 [4]
-Underfull \hbox (badness 10000) in paragraph at lines 52--53
+Underfull \hbox (badness 10000) in paragraph at lines 39--40
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 61--62
+Underfull \hbox (badness 10000) in paragraph at lines 45--46
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 63--64
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 65--66
+Underfull \hbox (badness 10000) in paragraph at lines 47--48
 
  []
 
 [5]
-Underfull \hbox (badness 10000) in paragraph at lines 71--72
+Underfull \hbox (badness 10000) in paragraph at lines 53--54
+
+ []
+
+[6] [7]
+Underfull \hbox (badness 10000) in paragraph at lines 95--96
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 73--74
-
- []
-
-[6]
-Underfull \hbox (badness 10000) in paragraph at lines 79--80
-
- []
-
-[7] [8]
-Underfull \hbox (badness 10000) in paragraph at lines 121--122
+Underfull \hbox (badness 10000) in paragraph at lines 97--98
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 123--124
-
- []
-
-
-Overfull \hbox (13.55414pt too wide) in paragraph at lines 131--131
+Overfull \hbox (13.55414pt too wide) in paragraph at lines 105--105
 []\OT1/cmr/bx/n/12 Explain in-tu-itively why the dou-ble cen-ter-ing trick is n
 eeded
  []
 
-[9] [10]
-Underfull \hbox (badness 10000) in paragraph at lines 154--156
+[8] [9]
+Underfull \hbox (badness 10000) in paragraph at lines 128--130
 
  []
 
-[11]
-Underfull \hbox (badness 10000) in paragraph at lines 170--171
+[10]
+Underfull \hbox (badness 10000) in paragraph at lines 144--145
 
  []
 
-[12] (./Assignment1.bbl [13])
+[11] (./Assignment1.bbl [12])
 (/usr/local/texlive/2021basic/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2020/03/24 1.8d listings language file
 )
-(../code/centering_pca.py [14]) (../code/pca_transpose.py
+(../code/centering_pca.py [13]) (../code/pca_transpose.py
 Overfull \hbox (198.45581pt too wide) in paragraph at lines 11--12
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
-) [15] [16] (./Assignment1.aux) ) 
+) [14] (./Assignment1.aux) ) 
 Here is how much of TeX's memory you used:
  15445 strings out of 480445
- 291330 string characters out of 5892391
- 774139 words of memory out of 5000000
+ 291329 string characters out of 5892391
+ 773090 words of memory out of 5000000
  32448 multiletter control sequences out of 15000+600000
  412450 words of font info for 60 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
  87i,6n,89p,1307b,1790s stack positions out of 5000i,500n,10000p,200000b,80000s
- </Users/jacobmalm/Library/texlive/2021basic/t
-exmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1095.600pk></usr/local/texlive/2021bas
-ic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/202
-1basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive
-/2021basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/local/texl
-ive/2021basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/
-texlive/2021basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/lo
-cal/texlive/2021basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></us
-r/local/texlive/2021basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><
-/usr/local/texlive/2021basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pf
-b></usr/local/texlive/2021basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10
+ </Users/jacobmalm/Library/texlive/2021basic/texmf-
+var/fonts/pk/ljfour/jknappen/ec/tcrm1095.600pk></usr/local/texlive/2021basic/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2021basi
+c/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2021
+basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/local/texlive/2
+021basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texli
+ve/2021basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/t
+exlive/2021basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/loca
+l/texlive/2021basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/l
+ocal/texlive/2021basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></us
+r/local/texlive/2021basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><
+/usr/local/texlive/2021basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb
+></usr/local/texlive/2021basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10
 .pfb></usr/local/texlive/2021basic/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-r12.pfb></usr/local/texlive/2021basic/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmr17.pfb></usr/local/texlive/2021basic/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmr8.pfb></usr/local/texlive/2021basic/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmsy10.pfb></usr/local/texlive/2021basic/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmti10.pfb></usr/local/texlive/2021basic/texmf-dist/fonts/type1/publi
-c/amsfonts/symbols/msbm10.pfb>
-Output written on Assignment1.pdf (16 pages, 203593 bytes).
+ti10.pfb></usr/local/texlive/2021basic/texmf-dist/fonts/type1/public/amsfonts/s
+ymbols/msbm10.pfb>
+Output written on Assignment1.pdf (14 pages, 186432 bytes).
 PDF statistics:
- 171 PDF objects out of 1000 (max. 8388607)
- 112 compressed objects within 2 object streams
+ 157 PDF objects out of 1000 (max. 8388607)
+ 102 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  18 words of extra memory for PDF output out of 10000 (max. 10000000)
 
