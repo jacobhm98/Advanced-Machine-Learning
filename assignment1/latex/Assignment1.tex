@@ -9,6 +9,7 @@
 \usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{listings}
+\usepackage{hyperref}
 \author{jacmalm@kth.se}
 \title{DD2343 Assignment 1}
 \begin{document}
@@ -175,13 +176,16 @@ If we go by the k-nearest neighbour approach and set k=2, or go by max euclidean
 
 According to the Isomap algorithm, when we compute the distance matrix, the entry between point A and point B will be the summation of the distances between all nodes that lie along the shortest path between A and B through the neighbourhood graph G constructed in the previous step. If this is a disconnected graph, the distance between any point A to any point B where A and B are members of different disjoint subsets in G will be infinite, or undefined. In either of these cases the spectral decomposition of the Gram matrix corresponding to the distance matrix will be undefined and the Isomap algorithm will fail.
 
+
+\section{Programming task}
+
+\subsection{Data collection}
+I collected a list of all the worlds capital cities from \url{https://github.com/icyrockcom/country-capitals/blob/master/data/country-list.csv}.
+
 \bibliography{mybib}
 \bibliographystyle{plain}
 
 \section{Appendices}
 \subsection{Appendix 1}
 \lstinputlisting[language=python]{../code/centering_pca.py}
-\subsection{Appendix 2}
-\lstinputlisting[language=python]{../code/pca_transpose.py}
-
 \end{document}

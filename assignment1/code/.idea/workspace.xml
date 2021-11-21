@@ -20,7 +20,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f52cc56c-5cd7-4648-a5e3-929f3b0cd997" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/get_distance_matrix.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mds.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/treat_cities.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../latex/Assignment1.aux" beforeDir="false" afterPath="$PROJECT_DIR$/../latex/Assignment1.aux" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../latex/Assignment1.log" beforeDir="false" afterPath="$PROJECT_DIR$/../latex/Assignment1.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../latex/Assignment1.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../latex/Assignment1.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../latex/Assignment1.synctex.gz" beforeDir="false" afterPath="$PROJECT_DIR$/../latex/Assignment1.synctex.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../latex/Assignment1.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../latex/Assignment1.tex" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,9 +53,15 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
-  <component name="RunManager">
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.mds">
     <configuration name="assignment_1" type="PythonConfigurationType" factoryName="Python">
       <module name="code" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -60,7 +74,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pca_transpose.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/get_distance_matrix.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -69,6 +83,31 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="mds" type="PythonConfigurationType" factoryName="Python">
+      <module name="code" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$PROJECT_DIR$/../../../../../BusyBee/pi-core-connector/venv/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/mds.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.assignment_1" />
+      <item itemvalue="Python.mds" />
+    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -94,62 +133,99 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="308" y="-857" width="1071" height="706" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1637065931339">
-      <screen x="-78" y="-1055" width="1920" height="1055" />
-    </state>
-    <state x="308" y="-857" key="#com.intellij.execution.impl.EditConfigurationsDialog/-78.-1055.1920.1055/0.25.1792.1095@-78.-1055.1920.1055" timestamp="1637065931339" />
-    <state x="360" y="231" width="1071" height="706" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.1792.1095@0.25.1792.1095" timestamp="1636541895220" />
-    <state x="92" y="-690" key="#xdebugger.evaluate" timestamp="1637084118183">
-      <screen x="-78" y="-1055" width="1920" height="1055" />
-    </state>
-    <state x="92" y="-690" key="#xdebugger.evaluate/-78.-1055.1920.1055/0.25.1792.1095@-78.-1055.1920.1055" timestamp="1637084118183" />
-    <state width="1771" height="302" key="GridCell.Tab.0.bottom" timestamp="1637085120178">
-      <screen x="-78" y="-1055" width="1920" height="1055" />
-    </state>
-    <state width="1771" height="302" key="GridCell.Tab.0.bottom/-78.-1055.1920.1055/0.25.1792.1095@-78.-1055.1920.1055" timestamp="1637085120178" />
-    <state width="1771" height="293" key="GridCell.Tab.0.bottom/-78.-1055.1920.1055/0.25.1792.1095@0.25.1792.1095" timestamp="1636713120735" />
-    <state width="1771" height="293" key="GridCell.Tab.0.bottom/0.25.1792.1095@0.25.1792.1095" timestamp="1636553912753" />
-    <state width="1771" height="302" key="GridCell.Tab.0.center" timestamp="1637085120177">
-      <screen x="-78" y="-1055" width="1920" height="1055" />
-    </state>
-    <state width="1771" height="302" key="GridCell.Tab.0.center/-78.-1055.1920.1055/0.25.1792.1095@-78.-1055.1920.1055" timestamp="1637085120177" />
-    <state width="1771" height="293" key="GridCell.Tab.0.center/-78.-1055.1920.1055/0.25.1792.1095@0.25.1792.1095" timestamp="1636713120734" />
-    <state width="1771" height="293" key="GridCell.Tab.0.center/0.25.1792.1095@0.25.1792.1095" timestamp="1636553912752" />
-    <state width="1771" height="302" key="GridCell.Tab.0.left" timestamp="1637085120177">
-      <screen x="-78" y="-1055" width="1920" height="1055" />
-    </state>
-    <state width="1771" height="302" key="GridCell.Tab.0.left/-78.-1055.1920.1055/0.25.1792.1095@-78.-1055.1920.1055" timestamp="1637085120177" />
-    <state width="1771" height="293" key="GridCell.Tab.0.left/-78.-1055.1920.1055/0.25.1792.1095@0.25.1792.1095" timestamp="1636713120733" />
-    <state width="1771" height="293" key="GridCell.Tab.0.left/0.25.1792.1095@0.25.1792.1095" timestamp="1636553912752" />
-    <state width="1771" height="302" key="GridCell.Tab.0.right" timestamp="1637085120178">
-      <screen x="-78" y="-1055" width="1920" height="1055" />
-    </state>
-    <state width="1771" height="302" key="GridCell.Tab.0.right/-78.-1055.1920.1055/0.25.1792.1095@-78.-1055.1920.1055" timestamp="1637085120178" />
-    <state width="1771" height="293" key="GridCell.Tab.0.right/-78.-1055.1920.1055/0.25.1792.1095@0.25.1792.1095" timestamp="1636713120734" />
-    <state width="1771" height="293" key="GridCell.Tab.0.right/0.25.1792.1095@0.25.1792.1095" timestamp="1636553912752" />
-    <state width="1771" height="345" key="GridCell.Tab.1.bottom" timestamp="1637084128020">
-      <screen x="-78" y="-1055" width="1920" height="1055" />
-    </state>
-    <state width="1771" height="345" key="GridCell.Tab.1.bottom/-78.-1055.1920.1055/0.25.1792.1095@-78.-1055.1920.1055" timestamp="1637084128020" />
-    <state width="1771" height="345" key="GridCell.Tab.1.center" timestamp="1637084128019">
-      <screen x="-78" y="-1055" width="1920" height="1055" />
-    </state>
-    <state width="1771" height="345" key="GridCell.Tab.1.center/-78.-1055.1920.1055/0.25.1792.1095@-78.-1055.1920.1055" timestamp="1637084128019" />
-    <state width="1771" height="345" key="GridCell.Tab.1.left" timestamp="1637084128018">
-      <screen x="-78" y="-1055" width="1920" height="1055" />
-    </state>
-    <state width="1771" height="345" key="GridCell.Tab.1.left/-78.-1055.1920.1055/0.25.1792.1095@-78.-1055.1920.1055" timestamp="1637084128018" />
-    <state width="1771" height="345" key="GridCell.Tab.1.right" timestamp="1637084128019">
-      <screen x="-78" y="-1055" width="1920" height="1055" />
-    </state>
-    <state width="1771" height="345" key="GridCell.Tab.1.right/-78.-1055.1920.1055/0.25.1792.1095@-78.-1055.1920.1055" timestamp="1637084128019" />
-    <state x="405" y="208" key="SettingsEditor" timestamp="1636541922325">
+    <state x="360" y="231" width="1071" height="730" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1637511749295">
       <screen x="0" y="25" width="1792" height="1095" />
     </state>
-    <state x="405" y="208" key="SettingsEditor/0.25.1792.1095@0.25.1792.1095" timestamp="1636541922325" />
+    <state x="308" y="-857" key="#com.intellij.execution.impl.EditConfigurationsDialog/-78.-1055.1920.1055/0.25.1792.1095@-78.-1055.1920.1055" timestamp="1637065931339" />
+    <state x="360" y="231" key="#com.intellij.execution.impl.EditConfigurationsDialog/-78.-1055.1920.1055/0.25.1792.1095@0.25.1792.1095" timestamp="1637438679302" />
+    <state x="360" y="231" width="1071" height="730" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.1792.1095@0.25.1792.1095" timestamp="1637511749295" />
+    <state x="779" y="193" width="855" height="647" key="#xdebugger.evaluate" timestamp="1637517944410">
+      <screen x="0" y="25" width="1792" height="1095" />
+    </state>
+    <state x="92" y="-690" key="#xdebugger.evaluate/-78.-1055.1920.1055/0.25.1792.1095@-78.-1055.1920.1055" timestamp="1637084118183" />
+    <state x="779" y="193" width="855" height="647" key="#xdebugger.evaluate/0.25.1792.1095@0.25.1792.1095" timestamp="1637517944410" />
+    <state width="1771" height="445" key="GridCell.Tab.0.bottom" timestamp="1637518209705">
+      <screen x="0" y="25" width="1792" height="1095" />
+    </state>
+    <state width="1771" height="302" key="GridCell.Tab.0.bottom/-78.-1055.1920.1055/0.25.1792.1095@-78.-1055.1920.1055" timestamp="1637085120178" />
+    <state width="1771" height="316" key="GridCell.Tab.0.bottom/-78.-1055.1920.1055/0.25.1792.1095@0.25.1792.1095" timestamp="1637438902132" />
+    <state width="1771" height="445" key="GridCell.Tab.0.bottom/0.25.1792.1095@0.25.1792.1095" timestamp="1637518209705" />
+    <state width="1771" height="445" key="GridCell.Tab.0.center" timestamp="1637518209704">
+      <screen x="0" y="25" width="1792" height="1095" />
+    </state>
+    <state width="1771" height="302" key="GridCell.Tab.0.center/-78.-1055.1920.1055/0.25.1792.1095@-78.-1055.1920.1055" timestamp="1637085120177" />
+    <state width="1771" height="316" key="GridCell.Tab.0.center/-78.-1055.1920.1055/0.25.1792.1095@0.25.1792.1095" timestamp="1637438902125" />
+    <state width="1771" height="445" key="GridCell.Tab.0.center/0.25.1792.1095@0.25.1792.1095" timestamp="1637518209704" />
+    <state width="1771" height="445" key="GridCell.Tab.0.left" timestamp="1637518209704">
+      <screen x="0" y="25" width="1792" height="1095" />
+    </state>
+    <state width="1771" height="302" key="GridCell.Tab.0.left/-78.-1055.1920.1055/0.25.1792.1095@-78.-1055.1920.1055" timestamp="1637085120177" />
+    <state width="1771" height="316" key="GridCell.Tab.0.left/-78.-1055.1920.1055/0.25.1792.1095@0.25.1792.1095" timestamp="1637438902124" />
+    <state width="1771" height="445" key="GridCell.Tab.0.left/0.25.1792.1095@0.25.1792.1095" timestamp="1637518209704" />
+    <state width="1771" height="445" key="GridCell.Tab.0.right" timestamp="1637518209704">
+      <screen x="0" y="25" width="1792" height="1095" />
+    </state>
+    <state width="1771" height="302" key="GridCell.Tab.0.right/-78.-1055.1920.1055/0.25.1792.1095@-78.-1055.1920.1055" timestamp="1637085120178" />
+    <state width="1771" height="316" key="GridCell.Tab.0.right/-78.-1055.1920.1055/0.25.1792.1095@0.25.1792.1095" timestamp="1637438902129" />
+    <state width="1771" height="445" key="GridCell.Tab.0.right/0.25.1792.1095@0.25.1792.1095" timestamp="1637518209704" />
+    <state width="1771" height="445" key="GridCell.Tab.1.bottom" timestamp="1637518211059">
+      <screen x="0" y="25" width="1792" height="1095" />
+    </state>
+    <state width="1771" height="345" key="GridCell.Tab.1.bottom/-78.-1055.1920.1055/0.25.1792.1095@-78.-1055.1920.1055" timestamp="1637084128020" />
+    <state width="1771" height="445" key="GridCell.Tab.1.bottom/0.25.1792.1095@0.25.1792.1095" timestamp="1637518211059" />
+    <state width="1771" height="445" key="GridCell.Tab.1.center" timestamp="1637518211059">
+      <screen x="0" y="25" width="1792" height="1095" />
+    </state>
+    <state width="1771" height="345" key="GridCell.Tab.1.center/-78.-1055.1920.1055/0.25.1792.1095@-78.-1055.1920.1055" timestamp="1637084128019" />
+    <state width="1771" height="445" key="GridCell.Tab.1.center/0.25.1792.1095@0.25.1792.1095" timestamp="1637518211059" />
+    <state width="1771" height="445" key="GridCell.Tab.1.left" timestamp="1637518211059">
+      <screen x="0" y="25" width="1792" height="1095" />
+    </state>
+    <state width="1771" height="345" key="GridCell.Tab.1.left/-78.-1055.1920.1055/0.25.1792.1095@-78.-1055.1920.1055" timestamp="1637084128018" />
+    <state width="1771" height="445" key="GridCell.Tab.1.left/0.25.1792.1095@0.25.1792.1095" timestamp="1637518211059" />
+    <state width="1771" height="445" key="GridCell.Tab.1.right" timestamp="1637518211059">
+      <screen x="0" y="25" width="1792" height="1095" />
+    </state>
+    <state width="1771" height="345" key="GridCell.Tab.1.right/-78.-1055.1920.1055/0.25.1792.1095@-78.-1055.1920.1055" timestamp="1637084128019" />
+    <state width="1771" height="445" key="GridCell.Tab.1.right/0.25.1792.1095@0.25.1792.1095" timestamp="1637518211059" />
+    <state x="405" y="208" key="SettingsEditor" timestamp="1637505347347">
+      <screen x="0" y="25" width="1792" height="1095" />
+    </state>
+    <state x="405" y="208" key="SettingsEditor/-78.-1055.1920.1055/0.25.1792.1095@0.25.1792.1095" timestamp="1637434399975" />
+    <state x="405" y="208" key="SettingsEditor/0.25.1792.1095@0.25.1792.1095" timestamp="1637505347347" />
+    <state width="896" height="547" key="XDebugger.FullValuePopup" timestamp="1637496369231">
+      <screen x="0" y="25" width="1792" height="1095" />
+    </state>
+    <state width="896" height="547" key="XDebugger.FullValuePopup/0.25.1792.1095@0.25.1792.1095" timestamp="1637496369231" />
     <state x="702" y="-610" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1637069768134">
       <screen x="-78" y="-1055" width="1920" height="1055" />
     </state>
     <state x="702" y="-610" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-78.-1055.1920.1055/0.25.1792.1095@-78.-1055.1920.1055" timestamp="1637069768134" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/mds.py</url>
+          <line>5</line>
+          <option name="timeStamp" value="69" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/get_distance_matrix.py</url>
+          <line>34</line>
+          <option name="timeStamp" value="89" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/get_distance_matrix.py</url>
+          <line>14</line>
+          <option name="timeStamp" value="104" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/mds.py</url>
+          <line>6</line>
+          <option name="timeStamp" value="105" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
