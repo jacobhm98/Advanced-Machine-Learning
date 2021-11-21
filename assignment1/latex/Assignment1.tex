@@ -32,7 +32,7 @@ However, if we shift the location of this manifold, while keeping its shape inta
 
 The first step we do when we perform PCA is to mean center the data. In \ref{mean-center} we showed why this was necessary. However, when we mean center, we only mean center along one of the two axes. If columns represent a feature and rows represent observations, we can view each column as containing observations of a distinct random variable. Thus in this case, mean centering along each column is interpreted as shifting the mean of the distribution responsible for generating this column to zero. This keeps the structure of the data intact.\newline
 
-When we wish to perform PCA on the transpose of our data matrix, the interpretation of the rows and axes switch. Furthermore, our data will not be mean centered after transposing the matrix, as in the previous PCA operation we only center along the columns.\newline
+When we wish to perform PCA on the transpose of our data matrix, the interpretation of the rows and columns switch. Furthermore, our data will not be mean centered after transposing the matrix, as in the previous PCA operation we only center along the columns.\newline
 
 We are not able to mean center along rows and columns before performing both PCA operations, as this will alter the distribution of our data set. Imagine a case where we are given a data matrix with $ n $ observations and two normally distributed features, $x, y$. Each one of these observations can be plotted on a 2d plane, where its position on the x-axis is given by its value of feature $ x $ and its y-value is given by value of feature $ y $. If we presume that these features are independent, our data points will fill in a circle as $ n \rightarrow  \infty $. Centering along each column will shift the center of this circle to the origin. Centering along the rows means that we need each observation to fulfill the following equation
 $$ 0 = \frac{1}{2} (x_{i} + y_{i},) i \in \lbrace 1 ...  n\rbrace $$
@@ -86,7 +86,7 @@ $$C_{x} = W^{T}Q\Lambda Q^{T}W$$
 
 Remembering our assumption that the variables in \textbf{x} are uncorrelated,  $C_{x}$ is a diagonal matrix. Since $\Lambda$ is diagonal and $Q$ is orthogonal, 
 $$WQ^{T} = I$$
-$$WQ^{T}Q=QI$$
+$$WQ^{T}Q=IQ$$
 $$W= Q$$
 
 and
@@ -97,9 +97,9 @@ However, since $C_{X}$ is a $p\times p$ matrix only the first $p$ eigenvalues of
 
 This suggests that the eigenvalues of the spectral decomposition of $C_{y}$ represent the amount of variance captured in the direction of its corresponding eigenvector, with our eigenvectors spanning the linear subspace that contains \textbf{y}. Thus our principal axes are given by $Q$ in order of importance, when $\Lambda$ is sorted in descending order \cite{book}.\newline
 
-Similarly, when deriving PCA from a minimization of squared error perspective, our principal components are given by \textbf{U}, with $X = U\Sigma V^{T}$. As shown in \ref{svd}, $U = Q$, and $\Sigma^2$ is proportional to $\Lambda$. Thus, due to the monotonicity of the square function, the principal axes will appear in the same order, and have the same values. As our principal axes determine our PCA projection, we can conclude that the two derivations yield equivalent results\cite{book}.
+Similarly, when deriving PCA from a minimization of squared error perspective, our principal components are given by \textbf{U}, with $X = U\Sigma V^{T}$ (SVD).\newline  
 
-
+If we rewrite $X$ into its SVD before computing the covariance matrix we can see that $U = Q$, and $\Sigma^2$ is proportional to $\Lambda$. Thus, due to the monotonicity of the square function, (when restricted to positive values) the principal axes will appear in the same order, and have the same values. As our principal axes determine our PCA projection, we can conclude that the two derivations yield equivalent results\cite{book}.
 
 \section{Multidimensional Scaling and Isomap}
 
@@ -157,7 +157,7 @@ To demonstrate how this process can lead to a disconnected graph,  assume we hav
 
 \end{tikzpicture}
 
-If we go by the k-nearest neighbour approach and set k=2, or go by max euclidean distance between nodes and set \textit{d} to smaller than 8, our resulting graph will be disconnected.
+If we go by the k-nearest neighbour approach and set $k=2,$ or go by max euclidean distance between nodes and set \textit{d} to smaller than 8, our resulting graph will be disconnected.
 
 \begin{tikzpicture}[node distance=15mm, main/.style = {draw, circle}] 
 \node[main] (1) {$0,0$};
@@ -176,11 +176,62 @@ If we go by the k-nearest neighbour approach and set k=2, or go by max euclidean
 
 According to the Isomap algorithm, when we compute the distance matrix, the entry between point A and point B will be the summation of the distances between all nodes that lie along the shortest path between A and B through the neighbourhood graph G constructed in the previous step. If this is a disconnected graph, the distance between any point A to any point B where A and B are members of different disjoint subsets in G will be infinite, or undefined. In either of these cases the spectral decomposition of the Gram matrix corresponding to the distance matrix will be undefined and the Isomap algorithm will fail.
 
+\subsection{Propose a heuristic to patch the problem arising in the case of a disconnected neighborhood graph. Explain the intuition and why it is expected to work well.}
+
+A reasonable heuristic is to first build up the neighborhood graph as per the algorithm given in the previous section. Then, if disconnected clusters appear, calculate the minimum distance between each cluster to every other cluster,  and add an edge between the closest disjoint nodes. This step is then repeated until a complete graph is formed.\newline
+
+This heuristic intuitively works well because it still attempts to form a respect the local structure of the manifold and form a neighborhood graph, it just requires us to relax some of the conditions (increase $k$ for certain choice nodes or increase the radius we look for neighbors within) iteratively until the graph is connected. Therefore it is only a slight modification to the Isomap algorithm. We are however assuming that our data points belong to a single manifold, so we know that there should be a path between all points to all other points. Perhaps an alteration could be to assess the minimum distance between the disconnected clusters, and if it is above a certain error tolerance we choose to treat the clusters as separate manifolds and project them separately.\newline
+
+In the given example, we would determine that the minimum distance between the two clusters are between the node located at $0, 2$ and $0, 10$, and that they are a distance of 8 apart. If this is deemed to be acceptable we would join these two nodes creating the following graph
+
+\begin{tikzpicture}[node distance=15mm, main/.style = {draw, circle}] 
+\node[main] (1) {$0,0$};
+\node[main] (2)[right of = 1] {$0,1$};
+\node[main] (3)[below of = 2] {$0,2$};
+\node[main] (4)[right of = 3] {$0,10$};
+\node[main] (5)[right of = 4] {$0,11$};
+\node[main] (6)[below of = 5] {$0,12$};
+\draw(1) -- (2);
+\draw(2) -- (3);
+\draw(3) -- (1);
+\draw(3) -- (4);
+\draw(4) -- (5);
+\draw(5) -- (6);
+\draw(6) -- (4);
+\end{tikzpicture}
 
 \section{Programming task}
 
 \subsection{Data collection}
-I collected a list of all the worlds capital cities from \url{https://github.com/icyrockcom/country-capitals/blob/master/data/country-list.csv}.
+I collected a list of all the worlds capital cities from \url{https://github.com/icyrockcom/country-capitals/blob/master/data/country-list.csv}. The API i chose to use was provided by \url{https://se.avstand.org/api.xhtml}. I filtered the list of cities by removing the cities that did not return a valid distance when pinging the API, a program for this can be found in Appendix 2. After this, I calculated the distance matrix for all the remaining 244 cities, and saved it as this operation was rather time consuming. The code for this task is given in Appendix 3.
+
+\subsection{Classical MDS}
+
+The following is the world map that was generated by my classical MDS algorithm (Appendix 4)
+\begin{center}
+	\includegraphics[scale= .4]{annotated_world_map.jpg}
+\end{center}
+
+The map is not oriented as we would normally view it, and it is slightly distorted in general. I believe this is due to the fact that I used all the worlds capital cities as my data points, thus when comparing an area of space like North America, which consists of two large countries and is thus represented by two data points, to an area like Europe, which consists of a lot of smaller countries, their relation is not entirely accurately represented. However, in general the geographical patterns as well as local relationships are retained. I have annotated the map with SA = South America, NA = North America, EU = Europe, AF = Africa, CA = Central Asia, SEA = South East Asia, AUS = Australia and friends. \newline
+
+Here is a zoomed in map of Europe and North Africa, as we can see the cities are positioned fairly accurately.
+
+\begin{center}
+	\includegraphics[scale= 0.6]{eu_af.png}
+\end{center}
+
+Pseudo-code and a helpful example was obtained from \cite{mds}
+
+\subsection{Metric MDS}
+
+In the metric MDS implementation I used (from the sklearn library) there were not so many parameters one could tune. I tried setting metric to False, this resulted in a map where all the cities where relatively evenly spaced, with the global structure of continents was not so well retained, but cities were well placed in relation to their near neighbours. This is to be expected as non-linear mds prioritizes keeping local relations intact over global structure.  Increasing the tolerance at which the algorithm was declared converged changed gradually made the local relationships less reflective of the truth.  Decreasing this tolerance had little to no effect, presumably because the algorithm already converged. All things considered, the default settings were fairly good.\newline
+
+Here is the map as produced by the metric mds library. It is fairly similar to the representation created by my classical mds implementation, apart from the fact that it is oriented slightly differently. Also I do have to say that Africa has better structural integrity in this version. On the whole, local relationships between cities are very similar between the two maps, cities form the same clusters in both implementations.
+
+\begin{center}
+	\includegraphics[scale= 0.4]{metric_annotated_world_map.jpg}
+\end{center}
+
 
 \bibliography{mybib}
 \bibliographystyle{plain}
@@ -188,4 +239,13 @@ I collected a list of all the worlds capital cities from \url{https://github.com
 \section{Appendices}
 \subsection{Appendix 1}
 \lstinputlisting[language=python]{../code/centering_pca.py}
+
+\subsection{Appendix 2}
+\lstinputlisting[language=python]{../code/treat_cities.py}
+
+\subsection{Appendix 3}
+\lstinputlisting[language=python]{../code/get_distance_matrix.py}
+
+\subsection{Appendix 4}
+\lstinputlisting[language=python]{../code/mds.py}
 \end{document}

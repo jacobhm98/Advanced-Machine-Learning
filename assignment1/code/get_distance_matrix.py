@@ -4,7 +4,6 @@ import csv
 
 
 base_url = "https://se.avstand.org/route.json?stops="
-CREATE_DISTANCE_MATRIX = True
 
 def get_distance_matrix(calculate_distance_matrix=False):
     cities = read_in_cities("treated_cities.csv")

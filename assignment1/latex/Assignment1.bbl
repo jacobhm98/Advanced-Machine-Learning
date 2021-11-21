@@ -13,4 +13,9 @@ Guido Gerig.
 \newblock Least squares, pseudo-inverses, pca and svd.
 \newblock Technical report, University of Utah, 2012.
 
+\bibitem{mds}
+Florian Wickelmaier.
+\newblock An introduction to mds.
+\newblock Technical report, Aalborg University, 2003.
+
 \end{thebibliography}
