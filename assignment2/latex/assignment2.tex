@@ -1,0 +1,38 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\author{jacmalm@kth.se}
+\title{Assignment 2}
+\begin{document}
+
+\section{Dependencies in a Directed Graphical Model}
+\subsection{In the graphical model of Figure 1, is $W_{d, n} \perp W_{d,n+1} \mid \theta_{d}, \beta_{1:K}$?}
+	Yes.
+	
+\subsection{In the graphical model of Figure 1, is $ \theta_{d} \perp \theta_{d+1} \mid Z_{d, 1:N}$?}
+
+No.
+
+\subsection{In the graphical model of Figure 1, is $ \theta_{d} \perp \theta_{d+1} \mid \alpha, Z_{1:D, 1:N}$?}
+
+Yes.
+
+\subsection{In the graphical model of Figure 2, is $ W_{d, n} \perp W_{d,n+1} \mid \Lambda_{d}, \beta_{1:K} $?}
+
+No.
+
+\subsection{In the graphical model of Figure 2, is $ \theta_{d} \perp \theta_{d+1} \mid Z_{d, 1:N}, Z_{d+1, 1:N}$?}
+
+No.
+
+\subsection{In the graphical model of Figure 2, is $ \Lambda_{d} \perp \Lambda_{d + 1} \mid \Phi, Z_{1:D, 1:n}$?}
+
+No.
+
+\end{document}
