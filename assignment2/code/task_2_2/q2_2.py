@@ -32,7 +32,9 @@
 import numpy as np
 from Tree import Tree
 from Tree import Node
+import copy
 
+K = 2
 
 def calculate_likelihood(tree_topology, theta, beta):
     """
@@ -45,16 +47,60 @@ def calculate_likelihood(tree_topology, theta, beta):
 
     This is a suggested template. You don't have to use it.
     """
-
-    # TODO Add your code here
-
-    # Start: Example Code Segment. Delete this segment completely before you implement the algorithm.
-    print("\tCalculating the likelihood...")
-    likelihood = np.random.rand()
-    # End: Example Code Segment
-
+    latent_vertices, leaves = get_leave_nodes(beta)
+    for element in latent_vertices:
+        factors_containing_element = [element]
+        child1, child2 = get_children(element, tree_topology)
+        factors_containing_element.append(child1)
+        factors_containing_element.append(child2)
+        factor_product(element, child1, theta)
+        factor_marginalize(factors_containing_element, theta)
+    marginal_jpd = np.zeros((K, K, K))
+    for i in range(K):
+        for j in range(K):
+            for k in range(K):
+                marginal_jpd[i][j][k] = theta[2][i] * theta[3][j] * theta[4][k]
+    print(marginal_jpd.sum())
+    likelihood = 1.0
+    for element in leaves:
+        likelihood *= theta[element][int(beta[element])]
     return likelihood
 
+def factor_marginalize(factors_to_be_marginalized, theta):
+    factor1 = factors_to_be_marginalized[1]
+    factor2 = factors_to_be_marginalized[2]
+    f1 = np.zeros(K)
+    f2 = np.zeros(K)
+    for i in range(K):
+        for j in range(K):
+            f1[j] += theta[factor1][i][j]
+            f2[j] += theta[factor2][i][j]
+    theta[factor1] = f1
+    theta[factor2] = f2
+
+
+
+def factor_product(parent, child, theta):
+    for i in range(K):
+        for j in range(K):
+            theta[child][i][j] = theta[child][i][j] * theta[parent][i]
+
+def get_children(node, tree_topology):
+    children = []
+    for index, element in enumerate(tree_topology[node::]):
+        if element == int(node):
+            children.append(index + node)
+    return children
+
+def get_leave_nodes(beta):
+    leaves = []
+    latent_vertices = []
+    for index, node in enumerate(beta):
+        if np.isnan(node):
+            latent_vertices.append(index)
+        else:
+            leaves.append(index)
+    return latent_vertices, leaves
 
 def main():
     print("Hello World!")
@@ -66,8 +112,10 @@ def main():
     print("filename: ", filename)
 
     t = Tree()
-    t.load_tree(filename)
+    t.create_random_binary_tree(seed_val=0, k=2, num_nodes=4)
+    #t.load_tree(filename)
     t.print()
+    t.sample_tree(num_samples=100000)
     print("K of the tree: ", t.k, "\talphabet: ", np.arange(t.k))
 
     print("\n2. Calculate likelihood of each FILTERED sample\n")
@@ -77,9 +125,30 @@ def main():
     for sample_idx in range(t.num_samples):
         beta = t.filtered_samples[sample_idx]
         print("\n\tSample: ", sample_idx, "\tBeta: ", beta)
-        sample_likelihood = calculate_likelihood(t.get_topology_array(), t.get_theta_array(), beta)
-        print("\tLikelihood: ", sample_likelihood)
+        theta = copy.deepcopy(t.get_theta_array())
+        calculated_likelihood = calculate_likelihood(t.get_topology_array(), theta, beta)
+        print("\tLikelihood: ", calculated_likelihood)
+        sample_likelihood = estimate_likelihood_from_samples(t, beta)
+        print("\tSample Likelihood: ", sample_likelihood)
+        #brute_marginalization(t.get_topology_array(), t.get_theta_array(), beta)
 
+def brute_marginalization(tree_topology, theta, beta):
+    likelihood = 1
+    latent_variables, leaves = get_leave_nodes(beta)
+    for node in leaves:
+        continue
+    for node in latent_variables:
+        continue
+
+
+
+def estimate_likelihood_from_samples(tree, beta):
+    count = 0
+    filtered_samples = tree.filtered_samples
+    for sample in filtered_samples:
+        if np.array_equal(sample, beta, equal_nan=True):
+            count += 1
+    return count / tree.num_samples
 
 if __name__ == "__main__":
     main()
