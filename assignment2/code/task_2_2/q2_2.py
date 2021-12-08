@@ -30,11 +30,13 @@
 """
 
 import numpy as np
+import itertools
 from Tree import Tree
 from Tree import Node
 import copy
 
-K = 2
+K = 5
+
 
 def calculate_likelihood(tree_topology, theta, beta):
     """
@@ -48,42 +50,103 @@ def calculate_likelihood(tree_topology, theta, beta):
     This is a suggested template. You don't have to use it.
     """
     latent_vertices, leaves = get_leave_nodes(beta)
-    for element in latent_vertices:
-        factors_containing_element = [element]
-        child1, child2 = get_children(element, tree_topology)
-        factors_containing_element.append(child1)
-        factors_containing_element.append(child2)
-        factor_product(element, child1, theta)
-        factor_marginalize(factors_containing_element, theta)
-    marginal_jpd = np.zeros((K, K, K))
+    factor_list = create_factor_list(theta, tree_topology)
+    elimination_ordering = create_elimination_ordering(tree_topology)
+    for element in latent_vertices[::-1]:
+        factors_containing_element, factor_list = partition_factors(element, factor_list)
+        new_factor = eliminate(element, factors_containing_element)
+        factor_list.append(new_factor)
+    assert len(factor_list) == 1
+    for leaf in factor_list[0][0]:
+        assert leaf in leaves
+    JPD = factor_list[0][1]
+    leaves = factor_list[0][0]
+    print("Sum of all probabilities in JPD", JPD.sum())
+    for leaf in leaves:
+        JPD = JPD[int(beta[leaf])]
+    return JPD
+
+def partition_factors(element, factor_list):
+    factors_containing_element = []
+    factors_not_containing_element = []
+    for factor in factor_list:
+        if element in factor[0]:
+            factors_containing_element.append(factor)
+        else:
+            factors_not_containing_element.append(factor)
+    return factors_containing_element, factors_not_containing_element
+
+
+def eliminate(element, factors):
+    combined_factor = combine_factors(factors, element)
+    return marginalize(combined_factor, element)
+
+def marginalize(factor, variable):
+    dimension = factor[0].index(variable)
+    factor[1] = np.sum(factor[1], axis=dimension)
+    del factor[0][dimension]
+    return factor
+
+def combine_factors(factors, common_variable):
+    factor = factors.pop()
+    move_variable_to_first_dimension(common_variable, factor)
+    for factor_to_combine in factors:
+        move_variable_to_first_dimension(common_variable, factor_to_combine)
+        factor = factor_product(factor, factor_to_combine)
+    return factor
+
+
+def factor_product(f1, f2):
+    assert f1[0][0] == f2[0][0]
+    combined_CPT = []
+    CPT1 = f1[1]
+    CPT2 = f2[1]
+    variable_dimension = f1[0]
+    for variable in f2[0][1::]:
+        variable_dimension.append(variable)
+    desired_shape = [K] * (len(variable_dimension) - 1)
+    for i in range(len(CPT1)):
+        permutations = [x * y for x, y in itertools.product(CPT1[i].flatten(), CPT2[i].flatten())]
+        permutations = np.reshape(permutations, desired_shape)
+        combined_CPT.append(permutations)
+    factor = [variable_dimension, np.array(combined_CPT)]
+    return factor
+
+
+def move_variable_to_first_dimension(variable, factor):
+    dimension_of_variable = factor[0].index(variable)
+    factor = swap_dimensions(factor, 0, dimension_of_variable)
+
+
+def swap_dimensions(factor, dim1, dim2):
+    indices_of_variables = factor[0]
+    CPT = factor[1]
+    temp = indices_of_variables[dim1]
+    indices_of_variables[dim1] = indices_of_variables[dim2]
+    indices_of_variables[dim2] = temp
+    CPT = np.swapaxes(CPT, dim1, dim2)
+    return [indices_of_variables, CPT]
+
+
+def create_elimination_ordering(tree_topology):
+    return None
+
+
+def create_factor_list(theta, tree_topology):
+    factor_list = []
+    theta[1] = multiply_in_singular_factor(theta[0], theta[1])
+    for element, parent in enumerate(tree_topology[1::]):
+        factor = [[int(parent), element + 1]]
+        factor.append(np.array(theta[element + 1]))
+        factor_list.append(factor)
+    return factor_list
+
+def multiply_in_singular_factor(singular, second_factor):
     for i in range(K):
         for j in range(K):
-            for k in range(K):
-                marginal_jpd[i][j][k] = theta[2][i] * theta[3][j] * theta[4][k]
-    print(marginal_jpd.sum())
-    likelihood = 1.0
-    for element in leaves:
-        likelihood *= theta[element][int(beta[element])]
-    return likelihood
+            second_factor[i][j] = second_factor[i][j] * singular[i]
+    return second_factor
 
-def factor_marginalize(factors_to_be_marginalized, theta):
-    factor1 = factors_to_be_marginalized[1]
-    factor2 = factors_to_be_marginalized[2]
-    f1 = np.zeros(K)
-    f2 = np.zeros(K)
-    for i in range(K):
-        for j in range(K):
-            f1[j] += theta[factor1][i][j]
-            f2[j] += theta[factor2][i][j]
-    theta[factor1] = f1
-    theta[factor2] = f2
-
-
-
-def factor_product(parent, child, theta):
-    for i in range(K):
-        for j in range(K):
-            theta[child][i][j] = theta[child][i][j] * theta[parent][i]
 
 def get_children(node, tree_topology):
     children = []
@@ -91,6 +154,7 @@ def get_children(node, tree_topology):
         if element == int(node):
             children.append(index + node)
     return children
+
 
 def get_leave_nodes(beta):
     leaves = []
@@ -102,20 +166,22 @@ def get_leave_nodes(beta):
             leaves.append(index)
     return latent_vertices, leaves
 
+
 def main():
     print("Hello World!")
     print("This file is the solution template for question 2.2.")
 
     print("\n1. Load tree data from file and print it\n")
 
-    filename = "data/q2_2_small_tree.pkl"  # "data/q2_2_medium_tree.pkl", "data/q2_2_large_tree.pkl"
+    filename = "data/q2_2_large_tree.pkl"
+    #filename = "data/q2_2_small_tree.pkl"  # "data/q2_2_medium_tree.pkl", "data/q2_2_large_tree.pkl"
     print("filename: ", filename)
 
     t = Tree()
-    t.create_random_binary_tree(seed_val=0, k=2, num_nodes=4)
-    #t.load_tree(filename)
+    #t.create_random_binary_tree(seed_val=0, k=2, num_nodes=4)
+    t.load_tree(filename)
     t.print()
-    t.sample_tree(num_samples=100000)
+    t.sample_tree(num_samples=10)
     print("K of the tree: ", t.k, "\talphabet: ", np.arange(t.k))
 
     print("\n2. Calculate likelihood of each FILTERED sample\n")
@@ -130,7 +196,8 @@ def main():
         print("\tLikelihood: ", calculated_likelihood)
         sample_likelihood = estimate_likelihood_from_samples(t, beta)
         print("\tSample Likelihood: ", sample_likelihood)
-        #brute_marginalization(t.get_topology_array(), t.get_theta_array(), beta)
+        # brute_marginalization(t.get_topology_array(), t.get_theta_array(), beta)
+
 
 def brute_marginalization(tree_topology, theta, beta):
     likelihood = 1
@@ -141,7 +208,6 @@ def brute_marginalization(tree_topology, theta, beta):
         continue
 
 
-
 def estimate_likelihood_from_samples(tree, beta):
     count = 0
     filtered_samples = tree.filtered_samples
@@ -149,6 +215,7 @@ def estimate_likelihood_from_samples(tree, beta):
         if np.array_equal(sample, beta, equal_nan=True):
             count += 1
     return count / tree.num_samples
+
 
 if __name__ == "__main__":
     main()
