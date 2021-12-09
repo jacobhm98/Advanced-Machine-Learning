@@ -110,14 +110,14 @@ def main():
 
     print("\n1. Load tree data from file and print it\n")
 
-    filename = "data/q2_2_large_tree.pkl"  # "data/q2_2_medium_tree.pkl", "data/q2_2_large_tree.pkl"
+    filename = "data/q2_2_small_tree.pkl"  # "data/q2_2_medium_tree.pkl", "data/q2_2_large_tree.pkl"
     print("filename: ", filename)
 
     t = Tree()
     #t.create_random_binary_tree(seed_val=0, k=2, num_nodes=4)
     t.load_tree(filename)
     t.print()
-    t.sample_tree(num_samples=10, seed_val=0)
+    t.sample_tree(num_samples=10000, seed_val=0)
     print("K of the tree: ", t.k, "\talphabet: ", np.arange(t.k))
 
     print("\n2. Calculate likelihood of each FILTERED sample\n")
@@ -132,7 +132,6 @@ def main():
         print("\tLikelihood: ", calculated_likelihood)
         sample_likelihood = estimate_likelihood_from_samples(t, beta)
         print("\tSample Likelihood: ", sample_likelihood)
-        # brute_marginalization(t.get_topology_array(), t.get_theta_array(), beta)
 
 
 
