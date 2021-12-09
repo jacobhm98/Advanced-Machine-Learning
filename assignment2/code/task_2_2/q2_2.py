@@ -193,7 +193,7 @@ def main():
     #t.create_random_binary_tree(seed_val=0, k=2, num_nodes=4)
     t.load_tree(filename)
     t.print()
-    t.sample_tree(num_samples=10000)
+    t.sample_tree(num_samples=10000, seed_val=0)
     print("K of the tree: ", t.k, "\talphabet: ", np.arange(t.k))
 
     print("\n2. Calculate likelihood of each FILTERED sample\n")
