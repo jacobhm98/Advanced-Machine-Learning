@@ -49,22 +49,34 @@ def calculate_likelihood(tree_topology, theta, beta):
 
     This is a suggested template. You don't have to use it.
     """
-    latent_vertices, leaves = get_leave_nodes(beta)
-    factor_list = create_factor_list(theta, tree_topology)
-    elimination_ordering = create_elimination_ordering(tree_topology)
-    for element in latent_vertices:
-        factors_containing_element, factor_list = partition_factors(element, factor_list)
-        new_factor = eliminate(element, factors_containing_element)
-        factor_list.append(new_factor)
-    assert len(factor_list) == 1
-    for leaf in factor_list[0][0]:
-        assert leaf in leaves
-    JPD = factor_list[0][1]
-    leaves = factor_list[0][0]
-    print("Sum of all probabilities in JPD", JPD.sum())
-    for leaf in leaves:
-        JPD = JPD[int(beta[leaf])]
-    return JPD
+    _, leaves = partition_leaves(beta)
+    likelihood = 0
+    for i in range(K):
+        likelihood += s(0, i, theta, tree_topology, leaves, beta) * theta[0][i]
+    return likelihood
+
+# returns the probability of all observations underneath node, given that node takes on value
+def s(node, i, theta, tree_topology, leaves, beta):
+    left_child, right_child = get_children(node, tree_topology)
+    left_recursion = 0
+    right_recursion = 0
+    #base case
+    if left_child in leaves:
+        left_recursion = theta[left_child][i][int(beta[left_child])]
+    else:
+        for j in range(K):
+            left_recursion += s(left_child, j, theta, tree_topology, leaves, beta) * theta[left_child][i][j]
+
+    if right_child in leaves:
+        right_recursion = theta[right_child][i][int(beta[right_child])]
+    else:
+        for k in range(K):
+            right_recursion += s(right_child, k, theta, tree_topology, leaves, beta) * theta[right_child][i][k]
+    return left_recursion * right_recursion
+
+
+
+
 
 def partition_factors(element, factor_list):
     factors_containing_element = []
@@ -157,7 +169,7 @@ def get_children(node, tree_topology):
     return children
 
 
-def get_leave_nodes(beta):
+def partition_leaves(beta):
     leaves = []
     latent_vertices = []
     for index, node in enumerate(beta):
