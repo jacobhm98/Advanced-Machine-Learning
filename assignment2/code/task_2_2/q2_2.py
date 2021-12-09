@@ -52,7 +52,7 @@ def calculate_likelihood(tree_topology, theta, beta):
     latent_vertices, leaves = get_leave_nodes(beta)
     factor_list = create_factor_list(theta, tree_topology)
     elimination_ordering = create_elimination_ordering(tree_topology)
-    for element in latent_vertices[::-1]:
+    for element in latent_vertices:
         factors_containing_element, factor_list = partition_factors(element, factor_list)
         new_factor = eliminate(element, factors_containing_element)
         factor_list.append(new_factor)
@@ -78,6 +78,7 @@ def partition_factors(element, factor_list):
 
 
 def eliminate(element, factors):
+    # factors_containing_element = get_factors_containing_element(element, factors)
     combined_factor = combine_factors(factors, element)
     return marginalize(combined_factor, element)
 
@@ -173,15 +174,14 @@ def main():
 
     print("\n1. Load tree data from file and print it\n")
 
-    filename = "data/q2_2_large_tree.pkl"
-    #filename = "data/q2_2_small_tree.pkl"  # "data/q2_2_medium_tree.pkl", "data/q2_2_large_tree.pkl"
+    filename = "data/q2_2_small_tree.pkl"  # "data/q2_2_medium_tree.pkl", "data/q2_2_large_tree.pkl"
     print("filename: ", filename)
 
     t = Tree()
     #t.create_random_binary_tree(seed_val=0, k=2, num_nodes=4)
     t.load_tree(filename)
     t.print()
-    t.sample_tree(num_samples=10)
+    t.sample_tree(num_samples=10000)
     print("K of the tree: ", t.k, "\talphabet: ", np.arange(t.k))
 
     print("\n2. Calculate likelihood of each FILTERED sample\n")
@@ -199,13 +199,6 @@ def main():
         # brute_marginalization(t.get_topology_array(), t.get_theta_array(), beta)
 
 
-def brute_marginalization(tree_topology, theta, beta):
-    likelihood = 1
-    latent_variables, leaves = get_leave_nodes(beta)
-    for node in leaves:
-        continue
-    for node in latent_variables:
-        continue
 
 
 def estimate_likelihood_from_samples(tree, beta):
