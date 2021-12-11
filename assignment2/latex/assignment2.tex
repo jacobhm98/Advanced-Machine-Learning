@@ -6,6 +6,7 @@
 \usepackage{amssymb}
 \usepackage{makeidx}
 \usepackage{graphicx}
+\usepackage{cite}
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
 \author{jacmalm@kth.se}
 \title{Assignment 2}
@@ -140,5 +141,82 @@ Sample:  0 	\\
 
 	Sample:  4\\
 	Likelihood:  3.11420969368965e-72
+
+\section{Super Epicentra - Expectation-Maximization}
+
+\subsection{Derive an EM algorithm for the model}
+
+The outline of the expectation maximization algorithm is given in section 9.3 in Pattern Recognition and Machine Learning, by Bishop \cite{book}. The outline is summarized as follows:\\
+
+Given a joint distribution $p(Y, Z \mid \theta)$ the goal is to maximize the likelihood $p(Y \mid \theta)$ w.r.t. $\theta$.
+\begin{flushleft}
+
+1.	Choose initial parameters $\theta$\\
+2. 	Evaluate $p(Z \mid Y, \theta^{old})$\\
+3.	Evaluate $\theta^{new}$ where
+$$ \theta^{new} = {arg max}_{\theta} Q(\theta, \theta^{old})$$
+and
+$$ Q(\theta, \theta^{old}) = \sum_{Z} p(Z \mid Y, \theta^{old})ln(p(Y, Z \mid \theta))$$
+4.	Check for convergence, we deem the algorithm to have converged if $p(Y \mid \theta^{new}) - p(Y \mid \theta^{old}) < \varepsilon $. If not converged, repeat from step 2. Otherwise $\theta^{new}$ are our parameter values.
+
+\end{flushleft}
+
+In the outline above, $Y$ denotes the set of observed variables, $Z$ denotes the set of latent variables, and $\theta$ denotes the model parameters. Thus in the context of our model $Y = \lbrace X, S\rbrace$, $Z = \lbrace Z \rbrace$, and $\theta = \lbrace \mu, \tau, \lambda, \pi\rbrace$.
+
+From inspection of the DGM, and taking note of the conditional independence properties encoded by it, we can see that the joint probability distribution of a single data point $n \in N$ is given by:
+
+$$ p(X_{n}, S_{n}, Z_{n} \mid \theta) = \prod_{k} p(Z_{n})p(X_{n} \mid Z_{n})p(S_{n} \mid Z_{n}) $$
+
+Assuming that our data points are sampled independently, the probability of observing the entire dataset, or likelihood, is given by
+
+$$ p(X, S, Z \mid \theta) = \prod_{n} \prod_{k} p(Z)p(X \mid Z)p(S \mid Z) $$
+$$ p(X, S, Z \mid \theta) = \prod_{n} \prod_{k} \pi_{k}^{z_{nk}}(N(x_{n} \mid \mu_{k}, \tau_{k}^{-1})P(\lambda_{k}))^{z_{nk}} $$
+
+Where $N$ and $P$ denote the Normal and Poisson distribution respectively. The log-likelihood is thus given by
+$$ln(p(X, S, Z \mid \theta)) = \sum_{n} \sum_{k} z_{nk}(ln(\pi_{k}) + ln(N(x_{n} \mid \mu_{k}, \tau_{k}^{-1})) + ln(P(\lambda_{k})) $$
+
+In practice, a problem arises due to the fact that $Z$ is not observed. This means that we cannot directly use $p(Z \mid Y, \theta^{old})$, but we instead use its expectation w.r.t its posterior distribution. Thus we introduce 
+
+$$\gamma(z_{nk}) = \mathbb{E}(z_{nk}) = \frac{\pi_{k}N(x_{n} \mid \mu_{k}, \tau_{k}^{-1})P(\lambda_{k})}{\sum_{j}\pi_{k}N(x_{n} \mid \mu_{k}, \tau_{k}^{-1})P(\lambda_{k})}$$
+
+We then want to maximize $$ \mathbb{E_{Z}}(ln(p(X, S, Z \mid \theta)) = \sum_{n} \sum_{k}\gamma(z_{nk})(ln(\pi_{k}) + ln(N(x_{n} \mid \mu_{k}, \tau_{k}^{-1})) + ln(P(\lambda_{k}))$$
+
+Comparing this expression with the one given for only a Gaussian mixture model we can see that the difference is given by the added $ln(P(\lambda_{k})$ term. Thus, when we derive the expression with respect to $\mu$ and $\sigma$, this term will disappear. This means that we can use the same solutions for approximating $\mu_{new}, \sigma_{new}$ as given by equations 9.19 and 9.21 in \cite{book}. An analogous argument can be made for the estimation of $\pi$.
+
+Using the same method as in the book for maximizing $\lambda$:
+
+
+$$ \lambda_{k}^{new} =argmax_{\lambda} \sum_{n} \gamma(z_{nk})(ln(\pi_{k}) + ln(N(x_{n} \mid \mu_{k}, \tau_{k}^{-1})) + ln(P(\lambda_{k}))$$
+
+$$ 0 = \frac{\partial}{\partial \lambda_{k}}\sum_{n} \gamma(z_{nk})(ln(\pi_{k}) + ln(N(x_{n} \mid \mu_{k}, \tau_{k}^{-1})) + ln(P(\lambda_{k}))$$
+
+$$ 0 = \sum_{n} \gamma(z_{nk})\frac{\partial}{\partial \lambda_{k}}(ln(\pi_{k}) + ln(N(x_{n} \mid \mu_{k}, \tau_{k}^{-1})) + ln(P(\lambda_{k}))$$
+
+$$ 0 = \sum_{n} \gamma(z_{nk})\frac{\partial}{\partial \lambda_{k}}ln(P(\lambda_{k}))$$
+
+Note that we are able to drop the summation over $k$ due to the fact that if we reverse order of the summation we note that all the $k$ terms are independent equally expressed additions to a quantity we wish to maximize (save for the value of $\lambda_{k}$), and thus we want to maximize all of them independently.\\
+
+The Poisson distribution is defined as
+$$ P(\lambda) := f(s_{n}) = \frac{\lambda^{s_{n}}e^{-\lambda}}{s_{n}!} $$
+Therefore
+$$ln(P(\lambda) = s_{n}ln(\lambda) - \lambda - ln(s_{n}!)$$
+and
+$$\frac{\partial}{\partial \lambda_{k}}(P(\lambda) = \frac{\partial}{\partial \lambda}(s_{n}ln(\lambda) - \lambda - ln(s_{n}!)$$
+$$\frac{\partial}{\partial \lambda}(P(\lambda) = \frac{s_{n}}{\lambda} - 1$$
+
+Plugging this into our derivative of the expected log-likelihood
+$$ 0 = \sum_{n} \gamma(z_{nk})(\frac{s_{n}}{\lambda_{k}} - 1)$$
+$$ 0 = \sum_{n} (\frac{\gamma(z_{nk})s_{n}}{\lambda_{k}} - \gamma(z_{nk}))$$
+$$ \sum_{n}\gamma(z_{nk}) = \sum_{n} \frac{\gamma(z_{nk})s_{n}}{\lambda_{k}} $$
+$$ \lambda_{k} =  \frac{\sum_{n}\gamma(z_{nk})s_{n}}{\sum_{n}\gamma(z_{nk})} $$
+
+Observe that this equation is of the same form as the equation for updating $mu$, except that we use $s_{n}$ instead of $x_{n}$.
+
+
+
+
+\bibliography{citations}
+\bibliographystyle{plain}
+
 
 \end{document}
