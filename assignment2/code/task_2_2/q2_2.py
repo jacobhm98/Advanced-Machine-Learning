@@ -37,6 +37,8 @@ import copy
 
 K = 5
 
+DYNAMICU_PROGRAMMINGGU = {}
+
 
 def calculate_likelihood(tree_topology, theta, beta):
     """
@@ -49,104 +51,38 @@ def calculate_likelihood(tree_topology, theta, beta):
 
     This is a suggested template. You don't have to use it.
     """
-    latent_vertices, leaves = get_leave_nodes(beta)
-    factor_list = create_factor_list(theta, tree_topology)
-    elimination_ordering = create_elimination_ordering(tree_topology)
-    for element in latent_vertices:
-        factors_containing_element, factor_list = partition_factors(element, factor_list)
-        new_factor = eliminate(element, factors_containing_element)
-        factor_list.append(new_factor)
-    assert len(factor_list) == 1
-    for leaf in factor_list[0][0]:
-        assert leaf in leaves
-    JPD = factor_list[0][1]
-    leaves = factor_list[0][0]
-    print("Sum of all probabilities in JPD", JPD.sum())
-    for leaf in leaves:
-        JPD = JPD[int(beta[leaf])]
-    return JPD
-
-def partition_factors(element, factor_list):
-    factors_containing_element = []
-    factors_not_containing_element = []
-    for factor in factor_list:
-        if element in factor[0]:
-            factors_containing_element.append(factor)
-        else:
-            factors_not_containing_element.append(factor)
-    return factors_containing_element, factors_not_containing_element
-
-
-def eliminate(element, factors):
-    # factors_containing_element = get_factors_containing_element(element, factors)
-    combined_factor = combine_factors(factors, element)
-    return marginalize(combined_factor, element)
-
-def marginalize(factor, variable):
-    dimension = factor[0].index(variable)
-    factor[1] = np.sum(factor[1], axis=dimension)
-    del factor[0][dimension]
-    return factor
-
-def combine_factors(factors, common_variable):
-    factor = factors.pop()
-    move_variable_to_first_dimension(common_variable, factor)
-    for factor_to_combine in factors:
-        move_variable_to_first_dimension(common_variable, factor_to_combine)
-        factor = factor_product(factor, factor_to_combine)
-    return factor
-
-
-def factor_product(f1, f2):
-    assert f1[0][0] == f2[0][0]
-    combined_CPT = []
-    CPT1 = f1[1]
-    CPT2 = f2[1]
-    variable_dimension = f1[0]
-    for variable in f2[0][1::]:
-        variable_dimension.append(variable)
-    desired_shape = [K] * (len(variable_dimension) - 1)
-    for i in range(len(CPT1)):
-        permutations = [x * y for x, y in itertools.product(CPT1[i].flatten(), CPT2[i].flatten())]
-        permutations = np.reshape(permutations, desired_shape)
-        combined_CPT.append(permutations)
-    factor = [variable_dimension, np.array(combined_CPT)]
-    return factor
-
-
-def move_variable_to_first_dimension(variable, factor):
-    dimension_of_variable = factor[0].index(variable)
-    factor = swap_dimensions(factor, 0, dimension_of_variable)
-
-
-def swap_dimensions(factor, dim1, dim2):
-    indices_of_variables = factor[0]
-    CPT = factor[1]
-    temp = indices_of_variables[dim1]
-    indices_of_variables[dim1] = indices_of_variables[dim2]
-    indices_of_variables[dim2] = temp
-    CPT = np.swapaxes(CPT, dim1, dim2)
-    return [indices_of_variables, CPT]
-
-
-def create_elimination_ordering(tree_topology):
-    return None
-
-
-def create_factor_list(theta, tree_topology):
-    factor_list = []
-    theta[1] = multiply_in_singular_factor(theta[0], theta[1])
-    for element, parent in enumerate(tree_topology[1::]):
-        factor = [[int(parent), element + 1]]
-        factor.append(np.array(theta[element + 1]))
-        factor_list.append(factor)
-    return factor_list
-
-def multiply_in_singular_factor(singular, second_factor):
+    _, leaves = partition_leaves(beta)
+    likelihood = 0
+    DYNAMICU_PROGRAMMINGGU.clear()
     for i in range(K):
+        likelihood += s(0, i, theta, tree_topology, leaves, beta) * theta[0][i]
+    return likelihood
+
+# returns the probability of all observations underneath node, given that node takes on value
+def s(node, i, theta, tree_topology, leaves, beta):
+    key = (node, i)
+
+    if key in DYNAMICU_PROGRAMMINGGU:
+        return DYNAMICU_PROGRAMMINGGU[key]
+
+    left_child, right_child = get_children(node, tree_topology)
+    left_recursion = 0
+    right_recursion = 0
+    #base case
+    if left_child in leaves:
+        left_recursion = theta[left_child][i][int(beta[left_child])]
+    else:
         for j in range(K):
-            second_factor[i][j] = second_factor[i][j] * singular[i]
-    return second_factor
+            left_recursion += s(left_child, j, theta, tree_topology, leaves, beta) * theta[left_child][i][j]
+
+    if right_child in leaves:
+        right_recursion = theta[right_child][i][int(beta[right_child])]
+    else:
+        for k in range(K):
+            right_recursion += s(right_child, k, theta, tree_topology, leaves, beta) * theta[right_child][i][k]
+    return_val = left_recursion * right_recursion
+    DYNAMICU_PROGRAMMINGGU[key] = return_val
+    return left_recursion * right_recursion
 
 
 def get_children(node, tree_topology):
@@ -157,7 +93,7 @@ def get_children(node, tree_topology):
     return children
 
 
-def get_leave_nodes(beta):
+def partition_leaves(beta):
     leaves = []
     latent_vertices = []
     for index, node in enumerate(beta):
@@ -181,7 +117,7 @@ def main():
     #t.create_random_binary_tree(seed_val=0, k=2, num_nodes=4)
     t.load_tree(filename)
     t.print()
-    t.sample_tree(num_samples=10000)
+    t.sample_tree(num_samples=10000, seed_val=0)
     print("K of the tree: ", t.k, "\talphabet: ", np.arange(t.k))
 
     print("\n2. Calculate likelihood of each FILTERED sample\n")
@@ -196,7 +132,6 @@ def main():
         print("\tLikelihood: ", calculated_likelihood)
         sample_likelihood = estimate_likelihood_from_samples(t, beta)
         print("\tSample Likelihood: ", sample_likelihood)
-        # brute_marginalization(t.get_topology_array(), t.get_theta_array(), beta)
 
 
 
