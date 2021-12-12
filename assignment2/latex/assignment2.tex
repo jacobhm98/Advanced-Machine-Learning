@@ -170,29 +170,29 @@ $$ p(X_{n}, S_{n}, Z_{n} \mid \theta) = \prod_{k} p(Z_{n})p(X_{n} \mid Z_{n})p(S
 Assuming that our data points are sampled independently, the probability of observing the entire dataset, or likelihood, is given by
 
 $$ p(X, S, Z \mid \theta) = \prod_{n} \prod_{k} p(Z)p(X \mid Z)p(S \mid Z) $$
-$$ p(X, S, Z \mid \theta) = \prod_{n} \prod_{k} \pi_{k}^{z_{nk}}(N(x_{n} \mid \mu_{k}, \tau_{k}^{-1})P(\lambda_{k}))^{z_{nk}} $$
+$$ p(X, S, Z \mid \theta) = \prod_{n} \prod_{k} \pi_{k}^{z_{nk}}(N(x_{n} \mid \mu_{k}, \tau_{k}^{-1})P(s_{n} \mid \lambda_{k}))^{z_{nk}} $$
 
 Where $N$ and $P$ denote the Normal and Poisson distribution respectively. The log-likelihood is thus given by
-$$ln(p(X, S, Z \mid \theta)) = \sum_{n} \sum_{k} z_{nk}(ln(\pi_{k}) + ln(N(x_{n} \mid \mu_{k}, \tau_{k}^{-1})) + ln(P(\lambda_{k})) $$
+$$ln(p(X, S, Z \mid \theta)) = \sum_{n} \sum_{k} z_{nk}(ln(\pi_{k}) + ln(N(x_{n} \mid \mu_{k}, \tau_{k}^{-1})) + ln(P(s_{n} \mid \lambda_{k})) $$
 
 In practice, a problem arises due to the fact that $Z$ is not observed. This means that we cannot directly use $p(Z \mid Y, \theta^{old})$, but we instead use its expectation w.r.t its posterior distribution. Thus we introduce 
 
-$$\gamma(z_{nk}) = \mathbb{E}(z_{nk}) = \frac{\pi_{k}N(x_{n} \mid \mu_{k}, \tau_{k}^{-1})P(\lambda_{k})}{\sum_{j}\pi_{k}N(x_{n} \mid \mu_{k}, \tau_{k}^{-1})P(\lambda_{k})}$$
+$$\gamma(z_{nk}) = \mathbb{E}(z_{nk}) = \frac{\pi_{k}N(x_{n} \mid \mu_{k}, \tau_{k}^{-1})P(s_{n} \mid \lambda_{k})}{\sum_{j}\pi_{j}N(x_{n} \mid \mu_{j}, \tau_{j}^{-1})P(s_{n} \mid \lambda_{j})}$$
 
-We then want to maximize $$ \mathbb{E_{Z}}(ln(p(X, S, Z \mid \theta)) = \sum_{n} \sum_{k}\gamma(z_{nk})(ln(\pi_{k}) + ln(N(x_{n} \mid \mu_{k}, \tau_{k}^{-1})) + ln(P(\lambda_{k}))$$
+We then want to maximize $$ \mathbb{E_{Z}}(ln(p(X, S, Z \mid \theta)) = \sum_{n} \sum_{k}\gamma(z_{nk})(ln(\pi_{k}) + ln(N(x_{n} \mid \mu_{k}, \tau_{k}^{-1})) + ln(P(s_{n} \mid \lambda_{k}))$$
 
 Comparing this expression with the one given for only a Gaussian mixture model we can see that the difference is given by the added $ln(P(\lambda_{k})$ term. Thus, when we derive the expression with respect to $\mu$ and $\sigma$, this term will disappear. This means that we can use the same solutions for approximating $\mu_{new}, \sigma_{new}$ as given by equations 9.19 and 9.21 in \cite{book}. An analogous argument can be made for the estimation of $\pi$.
 
 Using the same method as in the book for maximizing $\lambda$:
 
 
-$$ \lambda_{k}^{new} =argmax_{\lambda} \sum_{n} \gamma(z_{nk})(ln(\pi_{k}) + ln(N(x_{n} \mid \mu_{k}, \tau_{k}^{-1})) + ln(P(\lambda_{k}))$$
+$$ \lambda_{k}^{new} =argmax_{\lambda} \sum_{n} \gamma(z_{nk})(ln(\pi_{k}) + ln(N(x_{n} \mid \mu_{k}, \tau_{k}^{-1})) + ln(P(s_{n} \mid \lambda_{k}))$$
 
-$$ 0 = \frac{\partial}{\partial \lambda_{k}}\sum_{n} \gamma(z_{nk})(ln(\pi_{k}) + ln(N(x_{n} \mid \mu_{k}, \tau_{k}^{-1})) + ln(P(\lambda_{k}))$$
+$$ 0 = \frac{\partial}{\partial \lambda_{k}}\sum_{n} \gamma(z_{nk})(ln(\pi_{k}) + ln(N(x_{n} \mid \mu_{k}, \tau_{k}^{-1})) + ln(P(s_{n} \mid \lambda_{k}))$$
 
-$$ 0 = \sum_{n} \gamma(z_{nk})\frac{\partial}{\partial \lambda_{k}}(ln(\pi_{k}) + ln(N(x_{n} \mid \mu_{k}, \tau_{k}^{-1})) + ln(P(\lambda_{k}))$$
+$$ 0 = \sum_{n} \gamma(z_{nk})\frac{\partial}{\partial \lambda_{k}}(ln(\pi_{k}) + ln(N(x_{n} \mid \mu_{k}, \tau_{k}^{-1})) + ln(P(s_{n} \mid \lambda_{k}))$$
 
-$$ 0 = \sum_{n} \gamma(z_{nk})\frac{\partial}{\partial \lambda_{k}}ln(P(\lambda_{k}))$$
+$$ 0 = \sum_{n} \gamma(z_{nk})\frac{\partial}{\partial \lambda_{k}}ln(P(s_{n} \mid \lambda_{k}))$$
 
 Note that we are able to drop the summation over $k$ due to the fact that if we reverse order of the summation we note that all the $k$ terms are independent equally expressed additions to a quantity we wish to maximize (save for the value of $\lambda_{k}$), and thus we want to maximize all of them independently.\\
 
@@ -210,7 +210,7 @@ $$ 0 = \sum_{n} (\frac{\gamma(z_{nk})s_{n}}{\lambda_{k}} - \gamma(z_{nk}))$$
 $$ \sum_{n}\gamma(z_{nk}) = \sum_{n} \frac{\gamma(z_{nk})s_{n}}{\lambda_{k}} $$
 $$ \lambda_{k} =  \frac{\sum_{n}\gamma(z_{nk})s_{n}}{\sum_{n}\gamma(z_{nk})} $$
 
-Observe that this equation is of the same form as the equation for updating $mu$, except that we use $s_{n}$ instead of $x_{n}$.
+Observe that this equation is of the same form as the equation for updating $mu$, except that we use $s_{n}$ instead of $x_{n}$.	
 
 
 
