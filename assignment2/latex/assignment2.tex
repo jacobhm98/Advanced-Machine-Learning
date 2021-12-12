@@ -6,11 +6,16 @@
 \usepackage{amssymb}
 \usepackage{makeidx}
 \usepackage{graphicx}
+\graphicspath{ {./images/} }
 \usepackage{cite}
+\usepackage{listings}
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
 \author{jacmalm@kth.se}
-\title{Assignment 2}
+\title{DD2343 Assignment 2}
 \begin{document}
+
+\maketitle
+\newpage
 
 \section{Dependencies in a Directed Graphical Model}
 \subsection{In the graphical model of Figure 1, is $W_{d, n} \perp W_{d,n+1} \mid \theta_{d}, \beta_{1:K}$?}
@@ -210,10 +215,86 @@ $$ 0 = \sum_{n} (\frac{\gamma(z_{nk})s_{n}}{\lambda_{k}} - \gamma(z_{nk}))$$
 $$ \sum_{n}\gamma(z_{nk}) = \sum_{n} \frac{\gamma(z_{nk})s_{n}}{\lambda_{k}} $$
 $$ \lambda_{k} =  \frac{\sum_{n}\gamma(z_{nk})s_{n}}{\sum_{n}\gamma(z_{nk})} $$
 
-Observe that this equation is of the same form as the equation for updating $mu$, except that we use $s_{n}$ instead of $x_{n}$.	
+Observe that this equation is of the same form as the equation for updating $mu$, except that we use $s_{n}$ instead of $x_{n}$.
+
+\subsection{Implement your EM algorithm}
+
+Appendix 2.
+
+\subsection{Apply it to the data provided, give an account of the success and provide visualizations for a couple examples. Repeat it for a few different choices of K.}
+
+I used the directions for plotting the contours of the K different models as provided on the course webpage. Thus I plotted contours for the different Normal distributions, with linewidth signifying the "strength" of the super epicentra,  as given by the Poisson parameter.\\
+
+I superimposed this plot onto a scatter plot of our data points, where the size of the data point is given by that data points $S$ value.\\
+
+I began by fitting the data points with $K = 2$. The models initially looked like this:
 
 
+\begin{center}
+\includegraphics[width=\textwidth]{1_k=2.png}
+\end{center}
 
+
+Optically, we can determine that there are 3 clusters formed by the data points, and as expected our initial clusters do not seem well placed at all.\\
+
+After 1 iteration however,  the clusters are already quite well fitted to the data, with the exception being that the middle cluster is "split" between the two distributions.\\
+
+\begin{center}
+\includegraphics[width=\textwidth]{2_k=2.png}
+\end{center}
+
+And by the end, the clusters are about as well fitted as they can be\\
+
+\begin{center}
+\includegraphics[width=\textwidth]{3_k=2.png}
+\end{center}
+
+We can see that the algorithm attempts to make up for the deficiency we have in setting $K=2$ by making the variance of the of the second distribution larger, so that it encompasses both of the clusters not attributed to the first distribution, that also happen to be closer together.\\
+
+If we set $K=3$ and try again, we see quite good results, as expected from our observations of the previous experiment.
+
+\begin{center}
+\includegraphics[width=\textwidth]{1_k=3.png}
+\end{center}
+\begin{center}
+\includegraphics[width=\textwidth]{2_k=3.png}
+\end{center}
+\begin{center}
+\includegraphics[width=\textwidth]{3_k=3.png}
+\end{center}
+\begin{center}
+\includegraphics[width=\textwidth]{4_k=3.png}
+\end{center}
+
+By the end, the three distributions are well fitted to the three clusters, and the line widths seem correlated to that clusters average size of data points.
+
+An interesting thing happens when we set $K=6$. Of course, there is a lot more chaos, and some distributions end up "sharing" the clusters.
+
+\begin{center}
+\includegraphics[width=\textwidth]{1_k=6.png}
+\end{center}
+\begin{center}
+\includegraphics[width=\textwidth]{2_k=6.png}
+\end{center}
+\begin{center}
+\includegraphics[width=\textwidth]{3_k=6.png}
+\end{center}
+\begin{center}
+\includegraphics[width=\textwidth]{4_k=6.png}
+\end{center}
+
+However, if we look at the difference between the second last and last iteration, we can see that one distribution has disappeared. Also, I noticed that when I ran the code for $K=6$, seemingly randomly I would get an error about not being able to create the Normal distributions with our updated parameters. 
+
+When I began debugging, I noticed that when this would happen, we attempted to instantiate a Normal distribution with certain variance values being equal to zero, and scipy would throw an error. Passing in "allow\textunderscore singular=True" to the constructor of the Normal distribution fixed this. 
+
+This explains why in the images, one distribution disappears. I believe this is caused by the "vanishing variance" problem where if the mean of one cluster is exactly equal to one of the data points, setting its variance to zero contributes an infinite term to our log likelihood calculation, as mentioned in the book \cite{book}.
+
+\section{Appendix}
+\subsection{Appendix 1}
+\lstinputlisting[language=python]{../code/task_2_2/q2_2.py}
+
+\subsection{Appendix 2}
+\lstinputlisting[language=python]{../code/task_2_4/expectation_maximization.py}
 
 \bibliography{citations}
 \bibliographystyle{plain}

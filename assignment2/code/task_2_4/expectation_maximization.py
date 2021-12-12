@@ -4,7 +4,7 @@ from scipy.stats import multivariate_normal as normal_distribution
 from scipy.stats import poisson as poisson_distribution
 import matplotlib.pyplot as plt
 
-K = 3
+K = 6
 
 
 def main():
@@ -26,16 +26,16 @@ def estimate_parameters(X_data, S_data):
         visualize_data_and_models(X_data, S_data, normals, poissons)
     return pi, normals, poissons
 
+
 def visualize_data_and_models(X_data, S_data, normals, poissons):
+    col = ['blue', 'green', 'red', 'yellow', 'm', 'c']
     x, y = np.mgrid[-20:20, -20:20]
     pos = np.dstack((x, y))
-    Z = normals[0].pdf(pos)
-    plt.contour(x, y, Z, col='red', linewidths=poissons[0].mean(), alpha=0.1)
+    for k in range(K):
+        Z = normals[k].pdf(pos)
+        plt.contour(x, y, Z, colors=col[k], linewidths=poissons[k].mean(), alpha=0.1)
     plt.scatter(X_data[:, 0], X_data[:, 1], s=S_data)
     plt.show()
-
-
-
 
 
 def calculate_log_likelihood(X_data, S_data, pi, normals, poissons):
@@ -67,12 +67,12 @@ def re_estimate_parameters(X_data, S_data, gammas):
         mus[k] /= pi[k]
         poisson_params /= pi[k]
         for n in range(N):
-            #numpy fuckry needed in order to transpose
+            # numpy fuckry needed in order to transpose
             temp = np.zeros((1, 2))
             temp[0] = X_data[n] - mus[k]
             sigmas[k] += gammas[k][n] * np.matmul(np.transpose(temp), temp)
         sigmas[k] /= pi[k]
-        normal = normal_distribution(mean=mus[k], cov=sigmas[k])
+        normal = normal_distribution(mean=mus[k], cov=sigmas[k], allow_singular=True)
         normals.append(normal)
         poisson = poisson_distribution(poisson_params[k])
         poissons.append(poisson)
